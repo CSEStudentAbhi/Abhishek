@@ -856,7 +856,13 @@ h2::before {
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    margin: 0 auto;
+    margin: 0;
+    padding: 1rem 0.75rem;
+    /* Remove card appearance */
+    background: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
   }
   .certificate-img {
     max-width: 100%;
@@ -868,5 +874,166 @@ h2::before {
     grid-template-columns: 1fr !important;
     gap: 1rem;
     padding: 0 0.5rem;
+  }
+}
+
+/* --- Skills Section Responsive Redesign --- */
+.skills-section {
+  margin-bottom: 2rem;
+  padding: 0 2rem;
+}
+
+.skills-category-heading {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 1.2rem;
+  padding-left: 0.75rem;
+  border-left: 4px solid #00bcd4;
+  color: #00bcd4;
+  letter-spacing: 0.03em;
+  background: rgba(0, 188, 212, 0.07);
+  border-radius: 2px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+.skills-category-heading:hover {
+  background: rgba(0, 188, 212, 0.15);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.skill-card {
+  background: rgba(17,34,64,0.7);
+  border-radius: 12px;
+  padding: 1.2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s, background 0.2s;
+  min-width: 0;
+}
+.skill-card:hover {
+  box-shadow: 0 6px 24px rgba(0,188,212,0.12);
+  background: rgba(0,188,212,0.08);
+}
+.skill-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+/* --- Certifications Section Responsive Redesign --- */
+.certifications-section {
+  padding: 0 2rem;
+}
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+.certification-card {
+  background: rgba(17,34,64,0.7);
+  border-radius: 12px;
+  padding: 1.2rem 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.certification-card:hover {
+  box-shadow: 0 6px 24px rgba(0,188,212,0.12);
+  background: rgba(0,188,212,0.08);
+}
+.certificate-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0.5rem auto 0 auto;
+  border-radius: 6px;
+}
+
+/* --- Mobile Styles --- */
+@media (max-width: 600px) {
+  .skills-section, .certifications-section {
+    padding: 0 0.5rem;
+  }
+  .skills-category-heading {
+    font-size: 1.1rem;
+    padding-left: 0.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+    border-left-width: 3px;
+    line-height: 1.4;
+    border-radius: 0;
+  }
+  .skills-grid {
+    display: flex !important;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0;
+    width: 100%;
+    margin-bottom: 1.2rem;
+  }
+  .skill-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 1rem 0.75rem;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+  }
+  .skill-logo {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0;
+  }
+  .certifications-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0;
+    width: 100%;
+  }
+  .certification-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 1rem 0.75rem;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    align-items: flex-start;
+  }
+  .certificate-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0.5rem 0 0 0;
+    border-radius: 4px;
   }
 }
