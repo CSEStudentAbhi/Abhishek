@@ -151,6 +151,19 @@ function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  // Collapsible skill categories
+  const [openSkills, setOpenSkills] = useState({
+    programming: false,
+    web: false,
+    frameworks: false,
+    databases: false,
+    tools: false,
+    design: false,
+  });
+
+  const toggleSkillCategory = (cat) => {
+    setOpenSkills((prev) => ({ ...prev, [cat]: !prev[cat] }));
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -388,686 +401,710 @@ function App() {
             </motion.h2>
 
             {/* Programming Languages Heading */}
-            <h3 className="skills-category-heading">Programming Languages</h3>
-            <motion.div
-              className="skills-grid"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.1
-                  }
-                }
-              }}
-            >
-              {/* Programming Languages */}
+            <h3 className="skills-category-heading" onClick={() => toggleSkillCategory('programming')} style={{ cursor: 'pointer', userSelect: 'none' }}>
+              Programming Languages {openSkills.programming ? '▲' : '▼'}
+            </h3>
+            {openSkills.programming && (
               <motion.div
-                className="skill-card"
+                className="skills-grid"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
                 variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
                   visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
                     transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                      staggerChildren: 0.1
                     }
                   }
                 }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
               >
-                <img src={Python} alt="Python" className="skill-logo" />
-                <p>Python</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                {/* Programming Languages */}
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={Java} alt="Java" className="skill-logo" />
-                <p>Java</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={Python} alt="Python" className="skill-logo" />
+                  <p>Python</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={JavaScript} alt="JavaScript" className="skill-logo" />
-                <p>JavaScript</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={Java} alt="Java" className="skill-logo" />
+                  <p>Java</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={cpp} alt="C++" className="skill-logo" />
-                <p>C++</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={JavaScript} alt="JavaScript" className="skill-logo" />
+                  <p>JavaScript</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={php} alt="PHP" className="skill-logo" />
-                <p>php</p>
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={cpp} alt="C++" className="skill-logo" />
+                  <p>C++</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
+                    }
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={php} alt="PHP" className="skill-logo" />
+                  <p>php</p>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            )}
 
             {/* Web Technologies Heading */}
-            <h3 className="skills-category-heading">Web Technologies</h3>
-            <motion.div
-              className="skills-grid"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.1
-                  }
-                }
-              }}
-            >
+            <h3 className="skills-category-heading" onClick={() => toggleSkillCategory('web')} style={{ cursor: 'pointer', userSelect: 'none' }}>
+              Web Technologies {openSkills.web ? '▲' : '▼'}
+            </h3>
+            {openSkills.web && (
               <motion.div
-                className="skill-card"
+                className="skills-grid"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
                 variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
                   visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
                     transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                      staggerChildren: 0.1
                     }
                   }
                 }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
               >
-                <img src={html} alt="HTML5" className="skill-logo" />
-                <p>HTML</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={css} alt="CSS3" className="skill-logo" />
-                <p>CSS</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={html} alt="HTML5" className="skill-logo" />
+                  <p>HTML</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={bootstrap} alt="Bootstrap" className="skill-logo" />
-                <p>Bootstrap</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={css} alt="CSS3" className="skill-logo" />
+                  <p>CSS</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={tailwind} alt="Tailwind CSS" className="skill-logo" />
-                <p>Tailwind</p>
-              </motion.div>
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={bootstrap} alt="Bootstrap" className="skill-logo" />
+                  <p>Bootstrap</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
+                    }
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={tailwind} alt="Tailwind CSS" className="skill-logo" />
+                  <p>Tailwind</p>
+                </motion.div>
 
-            </motion.div>
+              </motion.div>
+            )}
 
             {/* Frameworks Heading */}
-            <h3 className="skills-category-heading">Frameworks</h3>
-            <motion.div
-              className="skills-grid"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.1
-                  }
-                }
-              }}
-            >
+            <h3 className="skills-category-heading" onClick={() => toggleSkillCategory('frameworks')} style={{ cursor: 'pointer', userSelect: 'none' }}>
+              Frameworks {openSkills.frameworks ? '▲' : '▼'}
+            </h3>
+            {openSkills.frameworks && (
               <motion.div
-                className="skill-card"
+                className="skills-grid"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
                 variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
                   visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
                     transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                      staggerChildren: 0.1
                     }
                   }
                 }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
               >
-                <img src={react} alt="React.js" className="skill-logo" />
-                <p>React</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={reactnative} alt="React Native" className="skill-logo" />
-                <p>React Native</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={react} alt="React.js" className="skill-logo" />
+                  <p>React</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={node} alt="Node.js" className="skill-logo" />
-                <p>Node</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={reactnative} alt="React Native" className="skill-logo" />
+                  <p>React Native</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={express} alt="Express.js" className="skill-logo" />
-                <p>Express</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={node} alt="Node.js" className="skill-logo" />
+                  <p>Node</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={angular} alt="Angular" className="skill-logo" />
-                <p>Angular</p>
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={express} alt="Express.js" className="skill-logo" />
+                  <p>Express</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
+                    }
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={angular} alt="Angular" className="skill-logo" />
+                  <p>Angular</p>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            )}
 
             {/* Databases Heading */}
-            <h3 className="skills-category-heading">Databases</h3>
-            <motion.div
-              className="skills-grid"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.1
-                  }
-                }
-              }}
-            >
+            <h3 className="skills-category-heading" onClick={() => toggleSkillCategory('databases')} style={{ cursor: 'pointer', userSelect: 'none' }}>
+              Databases {openSkills.databases ? '▲' : '▼'}
+            </h3>
+            {openSkills.databases && (
               <motion.div
-                className="skill-card"
+                className="skills-grid"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
                 variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
                   visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
                     transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                      staggerChildren: 0.1
                     }
                   }
                 }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
               >
-                <img src={mysql} alt="MySQL" className="skill-logo" />
-                <p>MySQL</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={mongodb} alt="MongoDB" className="skill-logo" />
-                <p>MongoDB</p>
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={mysql} alt="MySQL" className="skill-logo" />
+                  <p>MySQL</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
+                    }
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={mongodb} alt="MongoDB" className="skill-logo" />
+                  <p>MongoDB</p>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            )}
 
             {/* Tools & Others Heading */}
-            <h3 className="skills-category-heading">Tools & Others</h3>
-            <motion.div
-              className="skills-grid"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.1
-                  }
-                }
-              }}
-            >
+            <h3 className="skills-category-heading" onClick={() => toggleSkillCategory('tools')} style={{ cursor: 'pointer', userSelect: 'none' }}>
+              Tools & Others {openSkills.tools ? '▲' : '▼'}
+            </h3>
+            {openSkills.tools && (
               <motion.div
-                className="skill-card"
+                className="skills-grid"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
                 variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
                   visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
                     transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                      staggerChildren: 0.1
                     }
                   }
                 }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
               >
-                <img src={git} alt="Git & GitHub" className="skill-logo" />
-                <p>Git&GitHub</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={vscode} alt="VS Code" className="skill-logo" />
-                <p>VSCode</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={git} alt="Git & GitHub" className="skill-logo" />
+                  <p>Git&GitHub</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={postman} alt="Postman" className="skill-logo" />
-                <p>Postman</p>
-              </motion.div>
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={vscode} alt="VS Code" className="skill-logo" />
+                  <p>VSCode</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
+                    }
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={postman} alt="Postman" className="skill-logo" />
+                  <p>Postman</p>
+                </motion.div>
 
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={eclipse} alt="Eclipse" className="skill-logo" />
-                <p>Eclipse</p>
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={eclipse} alt="Eclipse" className="skill-logo" />
+                  <p>Eclipse</p>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            )}
 
             {/* Design Tools Heading */}
-            <h3 className="skills-category-heading">Design Tools</h3>
-            <motion.div
-              className="skills-grid"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.1
-                  }
-                }
-              }}
-            >
-              {/* Design Tools Cards */}
+            <h3 className="skills-category-heading" onClick={() => toggleSkillCategory('design')} style={{ cursor: 'pointer', userSelect: 'none' }}>
+              Design Tools {openSkills.design ? '▲' : '▼'}
+            </h3>
+            {openSkills.design && (
               <motion.div
-                className="skill-card"
+                className="skills-grid"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
                 variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
                   visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
                     transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                      staggerChildren: 0.1
                     }
                   }
                 }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
               >
-                <img src={canva} alt="Canva" className="skill-logo" />
-                <p>Canva</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                {/* Design Tools Cards */}
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={photoshop} alt="Photoshop" className="skill-logo" />
-                <p>Photoshop</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={canva} alt="Canva" className="skill-logo" />
+                  <p>Canva</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={blender} alt="Blender" className="skill-logo" />
-                <p>Blender</p>
-              </motion.div>
-              <motion.div
-                className="skill-card"
-                variants={{
-                  hidden: { y: 20, opacity: 0, scale: 0.8 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 10
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={photoshop} alt="Photoshop" className="skill-logo" />
+                  <p>Photoshop</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
                     }
-                  }
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img src={aftereffect} alt="After Effects" className="skill-logo" />
-                <p>After Effects</p>
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={blender} alt="Blender" className="skill-logo" />
+                  <p>Blender</p>
+                </motion.div>
+                <motion.div
+                  className="skill-card"
+                  variants={{
+                    hidden: { y: 20, opacity: 0, scale: 0.8 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 10
+                      }
+                    }
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    boxShadow: "0 15px 30px rgba(100, 255, 218, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img src={aftereffect} alt="After Effects" className="skill-logo" />
+                  <p>After Effects</p>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            )}
           </motion.section>
 
           <motion.section

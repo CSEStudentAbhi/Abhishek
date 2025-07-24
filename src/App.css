@@ -843,3 +843,30 @@ h2::before {
 .skills-section > .skills-category-heading:first-of-type {
   margin-top: 2.5rem;
 }
+
+/* Responsive Certifications Section */
+@media (max-width: 600px) {
+  .certifications-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 0.5rem;
+  }
+  .certification-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+  .certificate-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .skills-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+}
