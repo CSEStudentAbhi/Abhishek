@@ -1,180 +1,114 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+
+const COLORS = [
+  '#FF5252', '#FFEB3B', '#69F0AE', '#40C4FF', '#FF4081', '#FFD740', '#B388FF', '#00E676', '#FF6E40', '#536DFE', '#F50057', '#00B8D4'
+];
+
+function randomColor() {
+  return COLORS[Math.floor(Math.random() * COLORS.length)];
+}
+
+function randomBetween(a, b) {
+  return a + Math.random() * (b - a);
+}
+
+const FIREWORK_INTERVAL = 3000;
+const PARTICLES_PER_FIREWORK = 32;
+const PARTICLE_LIFETIME = 1200; // ms
 
 const AnimatedBackground = () => {
-  const [mounted, setMounted] = useState(false);
+  const canvasRef = useRef(null);
+  const animationRef = useRef();
+  const fireworks = useRef([]);
+  const lastFirework = useRef(Date.now());
 
   useEffect(() => {
-    setMounted(true);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    let running = true;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function spawnFirework() {
+      const x = randomBetween(0.15, 0.85) * canvas.width;
+      const y = randomBetween(0.15, 0.5) * canvas.height;
+      const color = randomColor();
+      const now = Date.now();
+      const particles = [];
+      for (let i = 0; i < PARTICLES_PER_FIREWORK; i++) {
+        const angle = (2 * Math.PI * i) / PARTICLES_PER_FIREWORK;
+        const speed = randomBetween(2.5, 5.5);
+        particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          color: randomColor(),
+          start: now,
+          life: PARTICLE_LIFETIME,
+        });
+      }
+      fireworks.current.push(...particles);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const now = Date.now();
+      fireworks.current = fireworks.current.filter(p => now - p.start < p.life);
+      for (const p of fireworks.current) {
+        const t = (now - p.start) / p.life;
+        const px = p.x + p.vx * t * 60;
+        const py = p.y + p.vy * t * 60 + 0.5 * 100 * t * t; // gravity
+        const alpha = 1 - t;
+        ctx.beginPath();
+        ctx.arc(px, py, 3 + 2 * (1 - t), 0, 2 * Math.PI);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = alpha;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 18;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function loop() {
+      if (!running) return;
+      draw();
+      if (Date.now() - lastFirework.current > FIREWORK_INTERVAL) {
+        spawnFirework();
+        lastFirework.current = Date.now();
+      }
+      animationRef.current = requestAnimationFrame(loop);
+    }
+    spawnFirework();
+    animationRef.current = requestAnimationFrame(loop);
+    return () => {
+      running = false;
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationRef.current);
+    };
   }, []);
 
-  const codeSnippets = [
-    'const hello = "world";',
-    'function greet() {',
-    'return "Hello";',
-    'console.log("Hi");',
-    'import React from "react";',
-    'export default App;',
-    'const [state, setState] = useState();',
-    'useEffect(() => {}, []);',
-    'const data = { name: "John" };',
-    'async function fetchData() {',
-  ];
-
-  const binaryNumbers = ['0', '1'];
-  
-  const techSymbols = [
-    '<>', '{}', '[]', '()', '//', '/*', '*/', '=>',
-    '{}', '[]', '()', '<>', '=>', '->', '::', '++',
-    '--', '==', '!=', '>=', '<=', '&&', '||', '??',
-    '...', '${}', '``', '""', "''", '//', '/*', '*/',
-    '<!--', '-->', '<?', '?>', '{{', '}}', '[[', ']]',
-    '()', '[]', '{}', '<>', '=>', '->', '::', '++'
-  ];
-
-  const generateRandomPosition = () => ({
-    x: Math.random() * 100,
-    rotate: Math.random() * 360
-  });
-
-  if (!mounted) return null;
-
   return (
-    <div 
-      className="animated-background" 
-      style={{ 
+    <canvas
+      ref={canvasRef}
+      style={{
         position: 'fixed',
         top: 0,
         left: 0,
-        width: '100%',
-        height: '100%',
+        width: '100vw',
+        height: '100vh',
         zIndex: 0,
         pointerEvents: 'none',
-        overflow: 'hidden',
-        background: 'transparent'
+        background: 'transparent',
       }}
-    >
-      {codeSnippets.map((snippet, index) => {
-        const { x, rotate } = generateRandomPosition();
-        return (
-          <motion.div
-            key={`snippet-${index}`}
-            className="code-snippet"
-            initial={{ 
-              y: window.innerHeight + 100,
-              opacity: 0,
-              x: x,
-              rotate: rotate
-            }}
-            animate={{
-              y: -100,
-              opacity: [0, 0.8, 0],
-              x: [x, x + Math.random() * 50 - 25],
-              rotate: [rotate, rotate + Math.random() * 180 - 90]
-            }}
-            transition={{
-              duration: 8 + Math.random() * 3,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-              ease: "linear"
-            }}
-            style={{
-              position: 'absolute',
-              left: `${x}%`,
-              fontSize: `${0.8 + Math.random() * 0.4}rem`,
-              color: 'rgba(144, 202, 249, 0.7)',
-              fontFamily: 'monospace',
-              whiteSpace: 'nowrap',
-              pointerEvents: 'none',
-              userSelect: 'none',
-              textShadow: '0 0 20px rgba(144, 202, 249, 0.7), 0 0 40px rgba(144, 202, 249, 0.5), 0 0 60px rgba(144, 202, 249, 0.3)'
-            }}
-          >
-            {snippet}
-          </motion.div>
-        );
-      })}
-
-      {binaryNumbers.map((num, index) => {
-        const { x, rotate } = generateRandomPosition();
-        return (
-          <motion.div
-            key={`binary-${index}`}
-            className="binary-number"
-            initial={{ 
-              y: window.innerHeight + 100,
-              opacity: 0,
-              x: x,
-              rotate: rotate
-            }}
-            animate={{
-              y: -100,
-              opacity: [0, 0.9, 0],
-              x: [x, x + Math.random() * 30 - 15],
-              rotate: [rotate, rotate + Math.random() * 90 - 45]
-            }}
-            transition={{
-              duration: 6 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 1.5,
-              ease: "linear"
-            }}
-            style={{
-              position: 'absolute',
-              left: `${x}%`,
-              fontSize: `${0.6 + Math.random() * 0.3}rem`,
-              color: 'rgba(76, 255, 80, 0.8)',
-              fontFamily: 'monospace',
-              pointerEvents: 'none',
-              userSelect: 'none',
-              textShadow: '0 0 25px rgba(76, 255, 80, 0.8), 0 0 50px rgba(76, 255, 80, 0.6), 0 0 75px rgba(76, 255, 80, 0.4)'
-            }}
-          >
-            {num}
-          </motion.div>
-        );
-      })}
-
-      {techSymbols.map((symbol, index) => {
-        const { x, rotate } = generateRandomPosition();
-        return (
-          <motion.div
-            key={`symbol-${index}`}
-            className="tech-symbol"
-            initial={{ 
-              y: window.innerHeight + 100,
-              opacity: 0,
-              x: x,
-              rotate: rotate
-            }}
-            animate={{
-              y: -100,
-              opacity: [0, 0.8, 0],
-              x: [x, x + Math.random() * 40 - 20],
-              rotate: [rotate, rotate + Math.random() * 120 - 60]
-            }}
-            transition={{
-              duration: 7 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 1.5,
-              ease: "linear"
-            }}
-            style={{
-              position: 'absolute',
-              left: `${x}%`,
-              fontSize: `${0.7 + Math.random() * 0.5}rem`,
-              color: 'rgba(255, 255, 255, 0.7)',
-              fontFamily: 'monospace',
-              pointerEvents: 'none',
-              userSelect: 'none',
-              textShadow: '0 0 25px rgba(255, 255, 255, 0.7), 0 0 50px rgba(255, 255, 255, 0.5), 0 0 75px rgba(255, 255, 255, 0.3)'
-            }}
-          >
-            {symbol}
-          </motion.div>
-        );
-      })}
-    </div>
+    />
   );
 };
 
