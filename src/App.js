@@ -2,7 +2,7 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { motion } from 'framer-motion';
-import AnimatedBackground from './components/AnimatedBackground';
+// import AnimatedBackground from './components/AnimatedBackground';
 import Abhi from './image/Abhi.jpeg';
 import Python from './logo/python.png';
 import Java from './logo/java.png';
@@ -40,62 +40,19 @@ import './App.css';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
 
-// Animated background of moving 0s and 1s
-function AnimatedBinaryBackground() {
-  const [digits, setDigits] = useState([]);
-  useEffect(() => {
-    // Generate random columns of 0s and 1s
-    const cols = Math.floor(window.innerWidth / 32);
-    const arr = Array.from({ length: cols }, (_, i) => ({
-      left: i * 32,
-      delay: Math.random() * 3,
-      speed: 2 + Math.random() * 2,
-      char: Math.random() > 0.5 ? '1' : '0',
-    }));
-    setDigits(arr);
-  }, []);
-  return (
-    <div className="binary-bg">
-      {digits.map((d, i) => (
-        <span
-          key={i}
-          className="binary-digit"
-          style={{
-            left: d.left,
-            animationDelay: `${d.delay}s`,
-            animationDuration: `${d.speed + 2}s`,
-          }}
-        >
-          {d.char}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    primary: { main: '#00bcd4', contrastText: '#fff' },
-    secondary: { main: '#ff4081', contrastText: '#fff' },
-    background: { default: '#0a192f', paper: '#112240' },
-    text: { primary: '#e6f1ff', secondary: '#8892b0' },
+    primary: { main: '#ff9800', contrastText: '#fff' },
+    secondary: { main: '#ff5722', contrastText: '#fff' },
+    background: { default: '#1a1a2e', paper: '#16213e' },
+    text: { primary: '#f0f0f0', secondary: '#a8a8a8' },
   },
   typography: {
     fontFamily: 'Montserrat, Roboto, Arial, sans-serif',
   },
 });
-const skillListVariants = {
-  visible: {
-    transition: {
-      staggerChildren: 0.08
-    }
-  }
-};
-const skillItemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
-};
+
 const skillsData = [
   {
     label: 'Programming Languages',
@@ -205,6 +162,14 @@ function App() {
     return () => clearInterval(blink);
   }, []);
 
+  useEffect(() => {
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+    };
+    document.addEventListener('contextmenu', handleContextMenu);
+    return () => document.removeEventListener('contextmenu', handleContextMenu);
+  }, []);
+
   React.useEffect(() => {
     document.body.classList.toggle('light-theme', theme === 'light');
   }, [theme]);
@@ -261,7 +226,6 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <AnimatedBackground />
       <div className="modern-app">
         {/* Navigation */}
         <nav className={`modern-nav ${isMenuOpen ? 'open' : ''}`}>

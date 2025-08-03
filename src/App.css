@@ -1,13 +1,13 @@
 /* --- Modern Portfolio App CSS --- */
 
 :root {
-  --color-bg: #181a1b;
-  --color-bg-paper: #23272a;
-  --color-primary: #222831;
-  --color-secondary: #393e46;
-  --color-text: #f1f1f1;
-  --color-text-secondary: #b0b3b8;
-  --color-accent: #00bcd4;
+  --color-bg: #1e1e1e;
+  --color-bg-paper: #252526;
+  --color-primary: #007acc;
+  --color-secondary: #3c3c3c;
+  --color-text: #cccccc;
+  --color-text-secondary: #969696;
+  --color-accent: #007acc;
 }
 
 body.light-theme, .light-theme {
@@ -27,6 +27,7 @@ body, html, #root, .modern-app {
   font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
   background: var(--color-bg);
   color: var(--color-text);
+  cursor: url('./image/fountain-pen.png'), auto;
 }
 
 /* --- Animations --- */
@@ -375,12 +376,6 @@ body, html, #root, .modern-app {
   transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
-.modern-contact-item:hover, .modern-contact-item:active {
-  background: var(--color-accent);
-  color: var(--color-bg);
-  transform: scale(1.04);
-  box-shadow: 0 6px 24px rgba(0,188,212,0.18);
-}
 .modern-contact-item h3 {
   margin-top: 0;
   margin-bottom: 0.5rem;
@@ -390,6 +385,21 @@ body, html, #root, .modern-app {
   color: var(--color-accent);
   text-decoration: underline;
   word-break: break-all;
+}
+.modern-contact-item:hover, .modern-contact-item:active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3), 0 4px 16px rgba(118, 75, 162, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+.modern-contact-item:hover h3, .modern-contact-item:active h3 {
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.modern-contact-item:hover a, .modern-contact-item:active a {
+  color: #ffeb3b;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Responsive Styles */
@@ -554,9 +564,20 @@ body, html, #root, .modern-app {
   text-shadow: 0 0 8px #00ff55, 0 0 2px #00ff55;
 }
 @keyframes binary-fall {
-  0% { top: -40px; opacity: 0.18; }
-  80% { opacity: 0.18; }
-  100% { top: 100vh; opacity: 0; }
+  0% { 
+    top: -50px; 
+    opacity: 0.3; 
+  }
+  10% { 
+    opacity: 0.3; 
+  }
+  90% { 
+    opacity: 0.3; 
+  }
+  100% { 
+    top: 100vh; 
+    opacity: 0; 
+  }
 }
 
 /* Ensure main app content is above the background */
