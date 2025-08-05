@@ -336,7 +336,7 @@ function App() {
               <div>
                 <h3>RV INSTITUTE OF TECHNOLOGY AND MANAGEMENT BENGALURU</h3>
                 <p>BE in Computer Science & Engg</p>
-                <p>CGPA: 8.25</p>
+                <p>CGPA: 8.26</p>
                 <p>2023 - 2026</p>
               </div>
             </div>
