@@ -22,9 +22,54 @@ const ChatBot = () => {
     scrollToBottom();
   }, [messages]);
 
+  // Function to parse response and format bullet points
+  const parseResponse = (text) => {
+    if (!text.includes('**')) {
+      return text;
+    }
+
+    // Split by ** and process each part
+    const parts = text.split('**');
+    const formattedParts = [];
+    let inBulletList = false;
+
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i].trim();
+      if (part) {
+        // Check if this part should be a bullet point
+        if (i % 2 === 1) { // Odd indices are between ** markers
+          // Check if this bullet point ends with *
+          if (part.endsWith('*')) {
+            const bulletContent = part.slice(0, -1).trim(); // Remove the * at the end
+            formattedParts.push({
+              type: 'bullet',
+              content: bulletContent,
+              isLast: true
+            });
+            inBulletList = false;
+          } else {
+            formattedParts.push({
+              type: 'bullet',
+              content: part,
+              isLast: false
+            });
+            inBulletList = true;
+          }
+        } else { // Even indices are regular text
+          formattedParts.push({
+            type: 'text',
+            content: part
+          });
+        }
+      }
+    }
+
+    return formattedParts;
+  };
+
   const getBotResponse = async (userMessage) => {
     try {
-      const response = await fetch('https://ai-assistent-chatboot.onrender.com/ask', {
+      const response = await fetch('http://localhost:5000/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,6 +135,32 @@ const ChatBot = () => {
     }
   };
 
+  // Component to render formatted message
+  const FormattedMessage = ({ text }) => {
+    const parsedContent = parseResponse(text);
+    
+    if (typeof parsedContent === 'string') {
+      return <span>{parsedContent}</span>;
+    }
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        {parsedContent.map((part, index) => (
+          <div key={index}>
+            {part.type === 'bullet' ? (
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                <span style={{ fontSize: '16px', color: 'var(--color-accent)' }}>•</span>
+                <span>{part.content}</span>
+              </div>
+            ) : (
+              <span>{part.content}</span>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <>
       {/* Chat Toggle Button */}
@@ -97,8 +168,8 @@ const ChatBot = () => {
         onClick={() => setIsOpen(!isOpen)}
         style={{
           position: 'fixed',
-          bottom: '20px',
-          right: '20px',
+          bottom: '30px',
+          right: '30px',
           width: '60px',
           height: '60px',
           borderRadius: '50%',
@@ -108,7 +179,7 @@ const ChatBot = () => {
           cursor: 'pointer',
           fontSize: '24px',
           boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-          zIndex: 1000,
+          zIndex: 9999,
           transition: 'all 0.3s ease'
         }}
         onMouseEnter={(e) => {
@@ -125,17 +196,18 @@ const ChatBot = () => {
       {isOpen && (
         <div style={{
           position: 'fixed',
-          bottom: '100px',
-          right: '20px',
-          width: '350px',
-          height: '500px',
+          bottom: '110px',
+          right: '30px',
+          width: '380px',
+          height: '550px',
           backgroundColor: 'var(--color-bg-paper)',
           borderRadius: '12px',
           boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-          zIndex: 999,
+          zIndex: 9998,
           display: 'flex',
           flexDirection: 'column',
-          border: '1px solid var(--color-secondary)'
+          border: '1px solid var(--color-secondary)',
+          maxHeight: 'calc(100vh - 140px)'
         }}>
           {/* Chat Header */}
           <div style={{
@@ -188,7 +260,11 @@ const ChatBot = () => {
                   fontSize: '14px',
                   lineHeight: '1.4'
                 }}>
-                  {message.text}
+                  {message.sender === 'bot' ? (
+                    <FormattedMessage text={message.text} />
+                  ) : (
+                    message.text
+                  )}
                 </div>
                 <div style={{
                   fontSize: '11px',
