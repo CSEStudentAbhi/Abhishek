@@ -39,6 +39,7 @@ import react_certificate from './certificate/React.jpg';
 import './App.css';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
+import ChatBot from './components/ChatBot';
 
 const darkTheme = createTheme({
   palette: {
@@ -498,6 +499,7 @@ function App() {
           </div>
           </motion.section>
       </div>
+      <ChatBot />
     </ThemeProvider>
   );
 }
