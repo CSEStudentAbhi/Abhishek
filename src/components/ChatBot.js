@@ -31,7 +31,6 @@ const ChatBot = () => {
     // Split by ** and process each part
     const parts = text.split('**');
     const formattedParts = [];
-    let inBulletList = false;
 
     for (let i = 0; i < parts.length; i++) {
       const part = parts[i].trim();
@@ -41,19 +40,60 @@ const ChatBot = () => {
           // Check if this bullet point ends with *
           if (part.endsWith('*')) {
             const bulletContent = part.slice(0, -1).trim(); // Remove the * at the end
-            formattedParts.push({
-              type: 'bullet',
-              content: bulletContent,
-              isLast: true
-            });
-            inBulletList = false;
+            
+            // Check if this content contains subpoints (text between * markers)
+            if (bulletContent.includes('*')) {
+              const subParts = bulletContent.split('*');
+              const mainPoint = subParts[0].trim();
+              const subpoints = [];
+              
+              for (let j = 1; j < subParts.length; j++) {
+                const subPart = subParts[j].trim();
+                if (subPart) {
+                  subpoints.push(subPart);
+                }
+              }
+              
+              formattedParts.push({
+                type: 'bullet-with-subpoints',
+                content: mainPoint,
+                subpoints: subpoints,
+                isLast: true
+              });
+            } else {
+              formattedParts.push({
+                type: 'bullet',
+                content: bulletContent,
+                isLast: true
+              });
+            }
           } else {
-            formattedParts.push({
-              type: 'bullet',
-              content: part,
-              isLast: false
-            });
-            inBulletList = true;
+            // Check if this content contains subpoints
+            if (part.includes('*')) {
+              const subParts = part.split('*');
+              const mainPoint = subParts[0].trim();
+              const subpoints = [];
+              
+              for (let j = 1; j < subParts.length; j++) {
+                const subPart = subParts[j].trim();
+                if (subPart) {
+                  subpoints.push(subPart);
+                }
+              }
+              
+              formattedParts.push({
+                type: 'bullet-with-subpoints',
+                content: mainPoint,
+                subpoints: subpoints,
+                isLast: false
+              });
+            } else {
+              formattedParts.push({
+                type: 'bullet',
+                content: part,
+                isLast: false
+              });
+            }
           }
         } else { // Even indices are regular text
           formattedParts.push({
@@ -152,6 +192,19 @@ const ChatBot = () => {
                 <span style={{ fontSize: '16px', color: 'var(--color-accent)' }}>•</span>
                 <span>{part.content}</span>
               </div>
+            ) : part.type === 'bullet-with-subpoints' ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ fontSize: '16px', color: 'var(--color-accent)' }}>•</span>
+                  <span>{part.content}</span>
+                </div>
+                {part.subpoints.map((subpoint, subIndex) => (
+                  <div key={subIndex} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginLeft: '24px' }}>
+                    <span style={{ fontSize: '12px', color: 'var(--color-accent)', opacity: 0.7 }}>◦</span>
+                    <span style={{ fontSize: '13px' }}>{subpoint}</span>
+                  </div>
+                ))}
+              </div>
             ) : (
               <span>{part.content}</span>
             )}
@@ -168,8 +221,8 @@ const ChatBot = () => {
         onClick={() => setIsOpen(!isOpen)}
         style={{
           position: 'fixed',
-          bottom: '30px',
-          right: '30px',
+          bottom: window.innerWidth <= 768 ? '20px' : '30px',
+          right: window.innerWidth <= 768 ? '20px' : '30px',
           width: '60px',
           height: '60px',
           borderRadius: '50%',
@@ -179,7 +232,7 @@ const ChatBot = () => {
           cursor: 'pointer',
           fontSize: '24px',
           boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-          zIndex: 9999,
+          zIndex: 1000,
           transition: 'all 0.3s ease'
         }}
         onMouseEnter={(e) => {
@@ -196,10 +249,12 @@ const ChatBot = () => {
       {isOpen && (
         <div style={{
           position: 'fixed',
-          bottom: '110px',
-          right: '30px',
-          width: '380px',
-          height: '550px',
+          bottom: '100px',
+          right: '20px',
+          width: window.innerWidth <= 768 ? 'calc(100vw - 40px)' : '380px',
+          height: window.innerWidth <= 768 ? 'calc(100vh - 200px)' : '550px',
+          maxWidth: '380px',
+          maxHeight: '550px',
           backgroundColor: 'var(--color-bg-paper)',
           borderRadius: '12px',
           boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
@@ -207,7 +262,12 @@ const ChatBot = () => {
           display: 'flex',
           flexDirection: 'column',
           border: '1px solid var(--color-secondary)',
-          maxHeight: 'calc(100vh - 140px)'
+          maxHeight: 'calc(100vh - 140px)',
+          ...(window.innerWidth <= 768 && {
+            bottom: '80px',
+            right: '20px',
+            left: '20px'
+          })
         }}>
           {/* Chat Header */}
           <div style={{

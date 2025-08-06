@@ -45,6 +45,10 @@ body, html, #root, .modern-app {
   0% { background-position: -200px 0; }
   100% { background-position: 200px 0; }
 }
+@keyframes progress {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
 
 /* --- Interactive Animations --- */
 .modern-hero-img {

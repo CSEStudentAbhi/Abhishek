@@ -3,7 +3,13 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { motion } from 'framer-motion';
 // import AnimatedBackground from './components/AnimatedBackground';
-import Abhi from './image/Abhi.jpeg';
+import Abhi from './image/AbhishekAmbi.png';
+import Abhishek1 from './image/AbhishekAmbi1.png'
+import Abhishek2 from './image/AbhishekAmbi2.png'
+import Abhishek3 from './image/AbhishekAmbi3.png'
+import Abhishek4 from './image/AbhishekAmbi4.png'
+import Abhishek5 from './image/AbhishekAmbi5.png'
+
 import Python from './logo/python.png';
 import Java from './logo/java.png';
 import JavaScript from './logo/JavaScript.png';
@@ -40,6 +46,8 @@ import './App.css';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
 import ChatBot from './components/ChatBot';
+import ComputerNetwork from './certificate/CN.jpg'
+import Nias from './certificate/Nias.jpeg'
 
 const darkTheme = createTheme({
   palette: {
@@ -119,13 +127,15 @@ const skillsData = [
 
 const certifications = [
   { img: fullstack, title: 'Full Stack Web Development', org: 'Simplilearn', year: '2022' },
-  { img: react_certificate, title: 'React.js', org: 'Great Learning', year: '2023' },
-  { img: jscer, title: 'JavaScript', org: 'Great Learning', year: '2023' },
-  { img: androiddev, title: 'Android Development', org: 'Great Learning', year: '2023' },
-  { img: pythonfun, title: 'Python Fundamental', org: 'Great Learning', year: '2023' },
-  { img: oops, title: 'OOPs With Java', org: 'Great Learning', year: '2023' },
-  { img: sead, title: 'Software Engg and Agile Development', org: 'infosys Springboard', year: '2023' },
-  { img: oep, title: 'Operating System', org: 'Mind Luster', year: '2023' },
+  { img: react_certificate, title: 'React.js', org: 'Great Learning', year: '2022' },
+  { img: jscer, title: 'JavaScript', org: 'Great Learning', year: '2022' },
+  { img: androiddev, title: 'Android Development', org: 'Great Learning', year: '2022' },
+  { img: pythonfun, title: 'Python Fundamental', org: 'Great Learning', year: '2022' },
+  { img: oops, title: 'OOPs With Java', org: 'Great Learning', year: '2024' },
+  { img: sead, title: 'Software Engg and Agile Development', org: 'infosys Springboard', year: '2024' },
+  { img: oep, title: 'Operating System', org: 'Mind Luster', year: '2024' },
+  { img: ComputerNetwork, title: 'Computer Network', org: 'Cisco Networking Academy', year: '2024' },
+  { img: Nias, title: 'Network Security', org: 'Nias Academy', year: '2025' },
 ];
 
 function App() {
@@ -139,6 +149,16 @@ function App() {
   const [showCursor, setShowCursor] = useState(true);
   const [isErasing, setIsErasing] = useState(false);
   const fullName = 'Abhishek Ambi';
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = [Abhi, Abhishek1, Abhishek2, Abhishek3, Abhishek4, Abhishek5];
+
+  // Debug: Check if images are loaded
+  useEffect(() => {
+    console.log('Images array:', images);
+    images.forEach((img, index) => {
+      console.log(`Image ${index}:`, img);
+    });
+  }, []);
 
   useEffect(() => {
     let timeout;
@@ -157,6 +177,15 @@ function App() {
     }
     return () => clearTimeout(timeout);
   }, [typedName, isErasing, fullName]);
+
+  // Auto-advance images every 4 seconds
+  useEffect(() => {
+    const imageInterval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 4000);
+
+    return () => clearInterval(imageInterval);
+  }, [images.length]);
 
   useEffect(() => {
     const blink = setInterval(() => setShowCursor(c => !c), 500);
@@ -255,9 +284,140 @@ function App() {
           </div>
         </nav>
         {/* Hero/Header */}
-        <header id="home" className="modern-hero">
-          <img src={Abhi} alt="Abhishek Ambi" className="modern-hero-img" />
-          <h1 className="modern-hero-title" style={{display:'inline-block'}}>
+        <header id="home" className="modern-hero" style={{ position: 'relative', overflow: 'hidden' }}>
+          {/* Background Image Cards
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1,
+            transform: 'translateY(-12%)'
+          }}>
+            {[-2, -1, 0, 1, 2].map((offset) => {
+              const imageIndex = (currentImageIndex + offset + images.length) % images.length;
+              // Only show cards for images that exist (not undefined/null)
+              if (!images[imageIndex]) return null;
+              
+              const isCurrent = offset === 0;
+              const isAdjacent = Math.abs(offset) === 1;
+              const isFar = Math.abs(offset) === 2;
+              
+              let cardStyle = {};
+              
+              if (isCurrent) {
+                cardStyle = {
+                  transform: 'translateX(0) translateY(0) scale(1) rotateY(0deg)',
+                  opacity: 0.6,
+                  zIndex: 5,
+                  filter: 'blur(0px)'
+                };
+              } else if (isAdjacent) {
+                const direction = offset > 0 ? 1 : -1;
+                cardStyle = {
+                  transform: `translateX(${direction * 80}px) translateY(${direction * 20}px) scale(0.8) rotateY(${direction * 15}deg)`,
+                  opacity: 0.4,
+                  zIndex: 4,
+                  filter: 'blur(1px)'
+                };
+              } else if (isFar) {
+                const direction = offset > 0 ? 1 : -1;
+                cardStyle = {
+                  transform: `translateX(${direction * 160}px) translateY(${direction * 40}px) scale(0.6) rotateY(${direction * 25}deg)`,
+                  opacity: 0.3,
+                  zIndex: 3,
+                  filter: 'blur(2px)'
+                };
+              }
+              
+              return (
+                <div
+                  key={`${currentImageIndex}-${offset}`}
+                  style={{
+                    position: 'absolute',
+                    width: '200px',
+                    height: '250px',
+                    transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                    ...cardStyle
+                  }}
+                >
+                  <div style={{
+                    width: '100%',
+                    height: '100%',
+                    background: 'white',
+                    borderRadius: '15px',
+                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.07)',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transform: 'perspective(1000px)',
+                    transformStyle: 'preserve-3d'
+                  }}>
+                    <div style={{
+                      flex: 1,
+                      background: images[imageIndex] ? `url(${images[imageIndex]}) center/cover` : 'var(--color-bg-paper)',
+                      position: 'relative'
+                    }}>
+                      {!images[imageIndex] && (
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: '100%',
+                          color: 'var(--color-text-secondary)',
+                          fontSize: '14px'
+                        }}>
+                          Image {imageIndex + 1}
+                        </div>
+                      )}
+                      <div style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+                        color: 'white',
+                        padding: '15px',
+                        textAlign: 'center'
+                      }}>
+                        <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 'bold' }}>
+                          Abhishek Ambi
+                        </h3>
+                        <p style={{ margin: '5px 0 0 0', fontSize: '12px', opacity: 0.9 }}>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div> */}
+          <div>
+            
+          <img 
+            src={images[currentImageIndex]} 
+            alt="Abhishek Ambi" 
+            className="modern-hero-img" 
+            style={{
+              transition: 'opacity 0.8s ease-in-out',
+              
+              position: 'relative',
+              zIndex: 10,
+              width: '200px',
+              height: '200px'
+            }}
+          />
+          </div>
+          <h1 className="modern-hero-title" style={{
+            display:'inline-block',
+            // position: 'absolute',
+            zIndex: 15
+          }}>
             {typedName}
             <span style={{
               display: 'inline-block',
@@ -272,7 +432,10 @@ function App() {
               |
             </span>
           </h1>
-          <p className="modern-hero-subtitle">Computer Science & Engg Student</p>
+          <p className="modern-hero-subtitle" style={{
+            position: 'relative',
+            zIndex: 15
+          }}>Computer Science & Engineering Student</p>
         </header>
         {/* About */}
         <motion.section id="about" className="modern-section"
