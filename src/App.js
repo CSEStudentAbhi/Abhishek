@@ -5,10 +5,10 @@ import { motion } from 'framer-motion';
 // import AnimatedBackground from './components/AnimatedBackground';
 import Abhi from './image/AbhishekAmbi.png';
 import Abhishek1 from './image/AbhishekAmbi1.png'
-import Abhishek2 from './image/AbhishekAmbi2.png'
+// import Abhishek2 from './image/AbhishekAmbi2.png'
 import Abhishek3 from './image/AbhishekAmbi3.png'
-import Abhishek4 from './image/AbhishekAmbi4.png'
-import Abhishek5 from './image/AbhishekAmbi5.png'
+import Abhishek4 from './image/AbhishekAmbi4.png';
+import Abhishek5 from './image/AbhishekAmbi5.png';
 
 import Python from './logo/python.png';
 import Java from './logo/java.png';
@@ -46,8 +46,37 @@ import './App.css';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
 import ChatBot from './components/ChatBot';
+import ImageSlider from './components/ImageSlider';
 import ComputerNetwork from './certificate/CN.jpg'
 import Nias from './certificate/Nias.jpeg'
+
+// Project Images
+import meetingHouse1 from './ProjectImage/MeetingHouse (1).png';
+import meetingHouse2 from './ProjectImage/MeetingHouse (2).png';
+import meetingHouse3 from './ProjectImage/MeetingHouse (3).png';
+import meetingHouse4 from './ProjectImage/MeetingHouse (4).png';
+import meetingHouse5 from './ProjectImage/MeetingHouse (5).png';
+import meetingHouse6 from './ProjectImage/MeetingHouse (6).png';
+
+// import vagdevi1 from './ProjectImage/vagdevi (1).png';
+import vagdevi2 from './ProjectImage/vagdevi (2).png';
+import vagdevi3 from './ProjectImage/vagdevi (3).png';
+import vagdevi4 from './ProjectImage/vagdevi (4).png';
+import vagdevi5 from './ProjectImage/vagdevi (5).png';
+import vagdevi6 from './ProjectImage/vagdevi (6).png';
+import vagdevi7 from './ProjectImage/vagdevi (7).png';
+import vagdevi8 from './ProjectImage/vagdevi (8).png';
+
+import objectDetection1 from './ProjectImage/ObjectDetection (1).png';
+import objectDetection2 from './ProjectImage/ObjectDetection (2).png';
+import objectDetection3 from './ProjectImage/ObjectDetection (3).png';
+import objectDetection4 from './ProjectImage/ObjectDetection (4).png';
+
+import pathfinder1 from './ProjectImage/Patfinder (1).png';
+import pathfinder2 from './ProjectImage/Patfinder (2).png';
+import pathfinder3 from './ProjectImage/Patfinder (3).png';
+import pathfinder4 from './ProjectImage/Patfinder (4).png';
+import pathfinder5 from './ProjectImage/Patfinder (5).png';
 
 const darkTheme = createTheme({
   palette: {
@@ -135,7 +164,7 @@ const certifications = [
   { img: sead, title: 'Software Engg and Agile Development', org: 'infosys Springboard', year: '2024' },
   { img: oep, title: 'Operating System', org: 'Mind Luster', year: '2024' },
   { img: ComputerNetwork, title: 'Computer Network', org: 'Cisco Networking Academy', year: '2024' },
-  { img: Nias, title: 'Network Security', org: 'Nias Academy', year: '2025' },
+  { img: Nias, title: 'BootCamp on Machine Learning', org: 'Nias Academy', year: '2025' },
 ];
 
 function App() {
@@ -145,12 +174,65 @@ function App() {
   const [theme, setTheme] = useState('dark');
   const [modalCert, setModalCert] = useState(null);
   const [modalProject, setModalProject] = useState(null);
+  const [imageSliderOpen, setImageSliderOpen] = useState(false);
+  const [currentProjectImages, setCurrentProjectImages] = useState([]);
   const [typedName, setTypedName] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [isErasing, setIsErasing] = useState(false);
   const fullName = 'Abhishek Ambi';
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = [Abhi, Abhishek1, Abhishek2, Abhishek3, Abhishek4, Abhishek5];
+  const images = [Abhi, Abhishek1, Abhishek3, Abhishek4, Abhishek5];
+
+  // Project data with images
+  const projectsData = [
+    {
+      title: 'Meeting House',
+      desc: 'Developed an online meeting application using MERN Stack. Features include user authentication, event management, and resource sharing for seamless collaboration.',
+      link: 'https://indianmeetinghouse.netlify.app/',
+      images: [meetingHouse1, meetingHouse2, meetingHouse3, meetingHouse4, meetingHouse5, meetingHouse6]
+    },
+    {
+      title: 'Shri Vagdevi Construction',
+      desc: 'Shri Vagdevi Constructions is a professional civil engineering and construction firm dedicated to delivering high-quality residential and commercial projects with precision and reliability.',
+      link: 'https://www.shrivagdeviconstructions.com/',
+      images: [ vagdevi2, vagdevi3, vagdevi4, vagdevi5, vagdevi6, vagdevi7, vagdevi8]
+    },
+    {
+      title: 'Quick Eats',
+      desc: 'A "Quick Eats" hybrid app for a cloud kitchen would be a smart, streamlined platform designed to manage both online delivery and walk-in/takeaway.',
+      images: []
+    },
+    {
+      title: 'Plant disease detection',
+      desc: 'Building a plant disease detection system using machine learning and mobile technologies like Android, VSCode, React Native, or Flutter is a hackathon project idea.',
+      images: []
+    },
+    {
+      title: 'Object Detection',
+      desc: 'YOLOv5 (You Only Look Once version 5) is a powerful real-time object detection model known for its speed and accuracy.',
+      images: [objectDetection1, objectDetection2, objectDetection3, objectDetection4]
+    },
+    {
+      title: 'Path Finder',
+      desc: 'Created a web application with React to visualize pathfinding algorithms (Dijkstra\'s, DFS, BFS, A*) for finding the shortest path between points.',
+      images: [pathfinder1, pathfinder2, pathfinder3, pathfinder4, pathfinder5]
+    },
+    {
+      title: 'Todo List',
+      desc: 'Created a Java application for managing tasks with a straightforward interface to boost productivity.',
+      images: []
+    },
+    {
+      title: 'C-Tutor',
+      desc: 'Augmented Reality (AR) is transforming education by creating immersive and interactive learning experiences that engage students and enhance comprehension.',
+      images: []
+    },
+    {
+      title: 'Online Medicine Store',
+      desc: 'Designed a web application with React, Node.js, and MongoDB, offering a simple cart system for purchasing medicines online.',
+      images: []
+    }
+  ];
 
   // Debug: Check if images are loaded
   useEffect(() => {
@@ -400,7 +482,7 @@ function App() {
           <div>
             
           <img 
-            src={images[currentImageIndex]} 
+            src={Abhi} 
             alt="Abhishek Ambi" 
             className="modern-hero-img" 
             style={{
@@ -490,50 +572,19 @@ function App() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7 }}
           >
-            {[
-              {
-                title: 'Meeting House',
-                desc: 'Developed an online meeting application using MERN Stack. Features include user authentication, event management, and resource sharing for seamless collaboration.',
-                link: 'https://indianmeetinghouse.netlify.app/'
-              },
-              {
-                title: 'Shri Vagdevi Construction',
-                desc: 'Shri Vagdevi Constructions is a professional civil engineering and construction firm dedicated to delivering high-quality residential and commercial projects with precision and reliability.',
-                link: 'https://www.shrivagdeviconstructions.com/'
-              },
-              {
-                title: 'Quick Eats',
-                desc: 'A “Quick Eats” hybrid app for a cloud kitchen would be a smart, streamlined platform designed to manage both online delivery and walk-in/takeaway.'
-              },
-              {
-                title: 'Plant disease detection',
-                desc: 'Building a plant disease detection system using machine learning and mobile technologies like Android, VSCode, React Native, or Flutter is a hackathon project idea.'
-              },
-              {
-                title: 'Object Detection',
-                desc: 'YOLOv5 (You Only Look Once version 5) is a powerful real-time object detection model known for its speed and accuracy.'
-              },
-              {
-                title: 'Path Finder',
-                desc: 'Created a web application with React to visualize pathfinding algorithms (Dijkstra’s, DFS, BFS, A*) for finding the shortest path between points.'
-              },
-              {
-                title: 'Todo List',
-                desc: 'Created a Java application for managing tasks with a straightforward interface to boost productivity.'
-              },
-              {
-                title: 'C-Tutor',
-                desc: 'Augmented Reality (AR) is transforming education by creating immersive and interactive learning experiences that engage students and enhance comprehension.'
-              },
-              {
-                title: 'Online Medicine Store',
-                desc: 'Designed a web application with React, Node.js, and MongoDB, offering a simple cart system for purchasing medicines online.'
-              }
-            ].map(project => (
+            {projectsData.map(project => (
               <div
                 key={project.title}
                 className="modern-project-item"
-                onClick={() => setModalProject(project)}
+                onClick={() => {
+                  if (project.images && project.images.length > 0) {
+                    setCurrentProjectImages(project.images);
+                    setModalProject(project);
+                    setImageSliderOpen(true);
+                  } else {
+                    setModalProject(project);
+                  }
+                }}
                 style={{ cursor: 'pointer' }}
               >
                 <h3>{project.title}</h3>
@@ -554,6 +605,14 @@ function App() {
              </div>
            </div>
          )}
+         {imageSliderOpen && currentProjectImages.length > 0 && (
+            <ImageSlider
+              images={currentProjectImages}
+              isOpen={imageSliderOpen}
+              onClose={() => setImageSliderOpen(false)}
+              projectData={modalProject}
+            />
+          )}
         </motion.section>
         {/* Skills */}
         <motion.section id="skills" className="modern-section"
@@ -663,7 +722,7 @@ function App() {
           </div>
           </motion.section>
       </div>
-      <ChatBot />
+      <ChatBot autoOpen={true} />
     </ThemeProvider>
   );
 }

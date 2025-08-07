@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const ChatBot = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const ChatBot = ({ autoOpen = false }) => {
+  const [isOpen, setIsOpen] = useState(autoOpen);
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -12,7 +12,16 @@ const ChatBot = () => {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(true);
   const messagesEndRef = useRef(null);
+
+  const suggestionQuestions = [
+    "Tell me about Abhishek's skills",
+    "Tell me about his Project?",
+    "How can I contact Abhishek?",
+    "What is Abhishek's educational background?",
+    "Tell me about Abhishek's hobbies"
+  ];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -21,6 +30,16 @@ const ChatBot = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Auto-open effect
+  useEffect(() => {
+    if (autoOpen) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+      }, 2000); // Open after 2 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [autoOpen]);
 
   // Function to parse response and format bullet points
   const parseResponse = (text) => {
@@ -144,6 +163,7 @@ const ChatBot = () => {
     setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
     setIsTyping(true);
+    setShowSuggestions(false); // Hide suggestions after first message
 
     try {
       const botResponseText = await getBotResponse(inputMessage);
@@ -156,6 +176,7 @@ const ChatBot = () => {
       };
       
       setMessages(prev => [...prev, botResponse]);
+      
     } catch (error) {
       const errorResponse = {
         id: messages.length + 2,
@@ -167,6 +188,42 @@ const ChatBot = () => {
     } finally {
       setIsTyping(false);
     }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    // Directly send the suggestion without adding to input box
+    const userMessage = {
+      id: messages.length + 1,
+      text: suggestion,
+      sender: 'user',
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setIsTyping(true);
+    setShowSuggestions(false); // Hide suggestions after first message
+
+    // Get bot response for the suggestion
+    getBotResponse(suggestion).then(botResponseText => {
+      const botResponse = {
+        id: messages.length + 2,
+        text: botResponseText,
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, botResponse]);
+      
+      setIsTyping(false);
+    }).catch(error => {
+      const errorResponse = {
+        id: messages.length + 2,
+        text: "Sorry, I'm having trouble connecting right now. Please try again!",
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorResponse]);
+      setIsTyping(false);
+    });
   };
 
   const handleKeyPress = (e) => {
@@ -281,18 +338,20 @@ const ChatBot = () => {
             alignItems: 'center'
           }}>
             <span>Abhishek's AI Assistant</span>
-            <button
-              onClick={() => setIsOpen(false)}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: 'white',
-                fontSize: '18px',
-                cursor: 'pointer'
-              }}
-            >
-              ×
-            </button>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <button
+                onClick={() => setIsOpen(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '18px',
+                  cursor: 'pointer'
+                }}
+              >
+                ×
+              </button>
+            </div>
           </div>
 
           {/* Messages Area */}
@@ -336,6 +395,58 @@ const ChatBot = () => {
                 </div>
               </div>
             ))}
+            
+            {/* Suggestion Questions */}
+            {showSuggestions && messages.length === 1 && (
+              <div style={{
+                alignSelf: 'flex-start',
+                maxWidth: '80%'
+              }}>
+                <div style={{
+                  padding: '8px 0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px'
+                }}>
+                  <div style={{
+                    fontSize: '12px',
+                    color: 'var(--color-text-secondary)',
+                    marginBottom: '4px'
+                  }}>
+                    Quick questions you can ask:
+                  </div>
+                  {suggestionQuestions.map((suggestion, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleSuggestionClick(suggestion)}
+                      style={{
+                        padding: '8px 12px',
+                        borderRadius: '16px',
+                        border: '1px solid var(--color-accent)',
+                        backgroundColor: 'transparent',
+                        color: 'var(--color-accent)',
+                        fontSize: '12px',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'all 0.2s ease',
+                        maxWidth: '100%',
+                        wordWrap: 'break-word'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = 'var(--color-accent)';
+                        e.target.style.color = 'white';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = 'transparent';
+                        e.target.style.color = 'var(--color-accent)';
+                      }}
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
             
             {isTyping && (
               <div style={{

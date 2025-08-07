@@ -1,274 +1,308 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const ImageSlider = ({ images }) => {
+const ImageSlider = ({ images, isOpen, onClose, projectData }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Auto-advance slides every 3 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
+    if (isOpen) {
+      setCurrentIndex(0);
+    }
+  }, [isOpen]);
 
-    return () => clearInterval(interval);
-  }, [images.length]);
+  const nextImage = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
-  const goToSlide = (index) => {
+  const prevImage = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToImage = (index) => {
     setCurrentIndex(index);
   };
 
-  const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (!isOpen) return;
+      
+      if (e.key === 'ArrowRight') {
+        nextImage();
+      } else if (e.key === 'ArrowLeft') {
+        prevImage();
+      } else if (e.key === 'Escape') {
+        onClose();
+      }
+    };
 
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [isOpen, images.length]);
 
-  const getSlideIndex = (offset) => {
-    return (currentIndex + offset + images.length) % images.length;
-  };
-
-  const getSlideStyle = (offset) => {
-    const isCurrent = offset === 0;
-    const isAdjacent = Math.abs(offset) === 1;
-    const isFar = Math.abs(offset) === 2;
-
-    if (isCurrent) {
-      return {
-        transform: 'translateX(0) scale(1) rotateY(0deg)',
-        zIndex: 10,
-        filter: 'blur(0px)',
-        opacity: 1,
-      };
-    } else if (isAdjacent) {
-      const direction = offset > 0 ? 1 : -1;
-      return {
-        transform: `translateX(${direction * 60}%) scale(0.8) rotateY(${direction * 15}deg)`,
-        zIndex: 5,
-        filter: 'blur(2px)',
-        opacity: 0.7,
-      };
-    } else if (isFar) {
-      const direction = offset > 0 ? 1 : -1;
-      return {
-        transform: `translateX(${direction * 120}%) scale(0.6) rotateY(${direction * 30}deg)`,
-        zIndex: 1,
-        filter: 'blur(4px)',
-        opacity: 0.4,
-      };
-    } else {
-      return {
-        transform: 'translateX(200%) scale(0.4) rotateY(45deg)',
-        zIndex: 0,
-        filter: 'blur(6px)',
-        opacity: 0.2,
-      };
-    }
-  };
+  if (!isOpen) return null;
 
   return (
-    <div style={{
-      position: 'relative',
-      width: '100%',
-      height: '400px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      overflow: 'hidden',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      borderRadius: '20px',
-      margin: '20px 0'
-    }}>
-      {/* Navigation Arrows */}
-      <button
-        onClick={goToPrevious}
-        style={{
-          position: 'absolute',
-          left: '20px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          background: 'rgba(255, 255, 255, 0.2)',
-          border: 'none',
-          borderRadius: '50%',
-          width: '50px',
-          height: '50px',
-          color: 'white',
-          fontSize: '24px',
-          cursor: 'pointer',
-          zIndex: 20,
-          backdropFilter: 'blur(10px)',
-          transition: 'all 0.3s ease'
-        }}
-        onMouseEnter={(e) => {
-          e.target.style.background = 'rgba(255, 255, 255, 0.3)';
-          e.target.style.transform = 'translateY(-50%) scale(1.1)';
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.background = 'rgba(255, 255, 255, 0.2)';
-          e.target.style.transform = 'translateY(-50%) scale(1)';
-        }}
-      >
-        ‹
-      </button>
-
-      <button
-        onClick={goToNext}
-        style={{
-          position: 'absolute',
-          right: '20px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          background: 'rgba(255, 255, 255, 0.2)',
-          border: 'none',
-          borderRadius: '50%',
-          width: '50px',
-          height: '50px',
-          color: 'white',
-          fontSize: '24px',
-          cursor: 'pointer',
-          zIndex: 20,
-          backdropFilter: 'blur(10px)',
-          transition: 'all 0.3s ease'
-        }}
-        onMouseEnter={(e) => {
-          e.target.style.background = 'rgba(255, 255, 255, 0.3)';
-          e.target.style.transform = 'translateY(-50%) scale(1.1)';
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.background = 'rgba(255, 255, 255, 0.2)';
-          e.target.style.transform = 'translateY(-50%) scale(1)';
-        }}
-      >
-        ›
-      </button>
-
-      {/* Slides Container */}
-      <div style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%',
+    <div 
+      className="image-slider-overlay"
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        {/* Render slides with different positions */}
-        {[-2, -1, 0, 1, 2].map((offset) => {
-          const slideIndex = getSlideIndex(offset);
-          const slideStyle = getSlideStyle(offset);
-          
-          return (
-            <div
-              key={`${currentIndex}-${offset}`}
-              style={{
-                position: 'absolute',
-                width: '280px',
-                height: '320px',
-                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                cursor: 'pointer',
-                ...slideStyle
-              }}
-              onClick={() => goToSlide(slideIndex)}
-            >
-              <div style={{
-                width: '100%',
-                height: '100%',
-                background: 'white',
-                borderRadius: '15px',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-                transform: 'perspective(1000px)',
-                transformStyle: 'preserve-3d'
-              }}>
-                <div style={{
-                  flex: 1,
-                  background: `url(${images[slideIndex]}) center/cover`,
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
-                    color: 'white',
-                    padding: '20px',
-                    textAlign: 'center'
-                  }}>
-                    <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 'bold' }}>
-                      Slide {slideIndex + 1}
-                    </h3>
-                    <p style={{ margin: '5px 0 0 0', fontSize: '14px', opacity: 0.9 }}>
-                      Abhishek Ambi
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Dots Indicator */}
-      <div style={{
-        position: 'absolute',
-        bottom: '20px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        display: 'flex',
-        gap: '10px',
-        zIndex: 20
-      }}>
-        {images.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            style={{
-              width: '12px',
-              height: '12px',
-              borderRadius: '50%',
-              border: 'none',
-              background: index === currentIndex ? 'white' : 'rgba(255, 255, 255, 0.5)',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              if (index !== currentIndex) {
-                e.target.style.background = 'rgba(255, 255, 255, 0.8)';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (index !== currentIndex) {
-                e.target.style.background = 'rgba(255, 255, 255, 0.5)';
-              }
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Progress Bar */}
-      <div style={{
-        position: 'absolute',
-        top: '20px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: '200px',
-        height: '4px',
-        background: 'rgba(255, 255, 255, 0.3)',
-        borderRadius: '2px',
-        overflow: 'hidden',
-        zIndex: 20
-      }}>
-        <div
+        justifyContent: 'center',
+        zIndex: 10000,
+        padding: '20px'
+      }}
+    >
+      <div 
+        className="image-slider-content"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          position: 'relative',
+          maxWidth: '90vw',
+          maxHeight: '90vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        {/* Close Button */}
+        <button
+          onClick={onClose}
           style={{
-            width: '100%',
-            height: '100%',
-            background: 'white',
-            borderRadius: '2px',
-            animation: 'progress 3s linear infinite'
+            position: 'absolute',
+            top: '-40px',
+            right: '0',
+            background: 'none',
+            border: 'none',
+            color: 'white',
+            fontSize: '24px',
+            cursor: 'pointer',
+            zIndex: 10001,
+            padding: '8px',
+            borderRadius: '50%',
+            width: '40px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'background-color 0.2s ease'
           }}
-        />
+          onMouseEnter={(e) => {
+            e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.backgroundColor = 'transparent';
+          }}
+        >
+          ×
+        </button>
+
+        {/* Image Container */}
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentIndex}
+              src={images[currentIndex]}
+              alt={`Project image ${currentIndex + 1}`}
+              style={{
+                maxWidth: '100%',
+                maxHeight: '70vh',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
+              }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.3 }}
+            />
+          </AnimatePresence>
+
+          {/* Navigation Arrows */}
+          {images.length > 1 && (
+            <>
+              <button
+                onClick={prevImage}
+                style={{
+                  position: 'absolute',
+                  left: '-60px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '24px',
+                  cursor: 'pointer',
+                  padding: '12px',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                  e.target.style.transform = 'translateY(-50%) scale(1.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                  e.target.style.transform = 'translateY(-50%) scale(1)';
+                }}
+              >
+                ‹
+              </button>
+              <button
+                onClick={nextImage}
+                style={{
+                  position: 'absolute',
+                  right: '-60px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '24px',
+                  cursor: 'pointer',
+                  padding: '12px',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                  e.target.style.transform = 'translateY(-50%) scale(1.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                  e.target.style.transform = 'translateY(-50%) scale(1)';
+                }}
+              >
+                ›
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Project Description */}
+        {projectData && (
+          <div style={{
+            marginTop: '20px',
+            textAlign: 'center',
+            maxWidth: '600px',
+            padding: '0 20px'
+          }}>
+            <h3 style={{
+              color: 'white',
+              fontSize: '24px',
+              margin: '0 0 10px 0',
+              fontWeight: 'bold'
+            }}>
+              {projectData.title}
+            </h3>
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.8)',
+              fontSize: '16px',
+              lineHeight: '1.6',
+              margin: '0 0 15px 0'
+            }}>
+              {projectData.desc}
+            </p>
+            {projectData.link && (
+              <a 
+                href={projectData.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-block',
+                  padding: '10px 20px',
+                  backgroundColor: 'var(--color-accent)',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  transition: 'background-color 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#e68900';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = 'var(--color-accent)';
+                }}
+              >
+                Visit Project
+              </a>
+            )}
+          </div>
+        )}
+
+        {/* Image Counter */}
+        <div style={{
+          color: 'white',
+          marginTop: '15px',
+          fontSize: '16px',
+          textAlign: 'center'
+        }}>
+          {currentIndex + 1} / {images.length}
+        </div>
+
+        {/* Dots Navigation */}
+        {images.length > 1 && (
+          <div style={{
+            display: 'flex',
+            gap: '8px',
+            marginTop: '15px',
+            justifyContent: 'center'
+          }}>
+            {images.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToImage(index)}
+                style={{
+                  width: '12px',
+                  height: '12px',
+                  borderRadius: '50%',
+                  border: 'none',
+                  background: index === currentIndex ? 'white' : 'rgba(255, 255, 255, 0.3)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  if (index !== currentIndex) {
+                    e.target.style.background = 'rgba(255, 255, 255, 0.5)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (index !== currentIndex) {
+                    e.target.style.background = 'rgba(255, 255, 255, 0.3)';
+                  }
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
