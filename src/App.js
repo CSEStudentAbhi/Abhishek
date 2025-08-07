@@ -263,7 +263,7 @@ function App() {
             <span className="modern-logo" onClick={() => scrollToSection('home')}>Abhishek</span>
             <button className="modern-menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>{isMenuOpen ? '×' : '☰'}</button>
             <ul className={`modern-nav-links ${isMenuOpen ? 'open' : ''}`}>
-              {['home','about','skills','education','certifications','projects','contact'].map((sec) => (
+              {['home','about','projects','skills','education','certifications','contact'].map((sec) => (
                 <li key={sec}>
                   <a
                     href={`#${sec}`}
@@ -447,46 +447,7 @@ function App() {
           <h2>About Me</h2>
           <p>Final year computer science student with practical experience in software development, data analysis, machine learning and computer vision through academic projects. Interested in using code and insights to solve real-world problems. Seeking to join a forward-thinking organization that supports innovation, mentorship, and lifelong learning while gaining worthwhile industry experience.</p>
           </motion.section>
-        {/* Skills */}
-        <motion.section id="skills" className="modern-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
-        >
-          <h2>Skills & Technologies</h2>
-          <div className="modern-skills">
-            {skillsData.map((cat) => (
-              <div key={cat.key} className="modern-skill-category">
-                <button className="modern-skill-heading" onClick={() => toggleSkillCategory(cat.key)}>
-                  {cat.label} <span>{openSkills[cat.key] ? '▲' : '▼'}</span>
-                </button>
-                {openSkills[cat.key] && (
-                  <motion.div
-                    className="modern-skill-list"
-                    variants={skillListVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    {cat.skills.map(skill => (
-                      <motion.span
-                        key={skill.name}
-                        className="modern-skill-chip"
-                        variants={skillItemVariants}
-                        whileHover={{ scale: 1.12, rotate: -3 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <img src={skill.icon} alt={skill.name} className="modern-skill-icon" />
-                        {skill.name}
-                      </motion.span>
-                    ))}
-              </motion.div>
-                )}
-              </div>
-            ))}
-          </div>
-        </motion.section>
-        {/* Education */}
+          {/* Education */}
         <motion.section id="education" className="modern-section"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -515,50 +476,6 @@ function App() {
             </div>
           </div>
           </motion.section>
-        {/* Certifications */}
-        <motion.section id="certifications" className="modern-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
-        >
-          <h2>Certifications</h2>
-          <motion.div className="modern-certifications-grid"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7 }}
-          >
-            {certifications.map(cert => (
-              <div
-                key={cert.title}
-                className="modern-cert-item"
-                onClick={() => setModalCert(cert)}
-                style={{ cursor: 'pointer' }}
-              >
-                <img src={cert.img} alt={cert.title} className="modern-cert-img" />
-                <div className="modern-cert-info">
-                  <strong>{cert.title}</strong><br />
-                  <span>{cert.org}</span><br />
-                  <span>{cert.year}</span>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-         {modalCert && (
-           <div className="cert-modal-overlay" onClick={() => setModalCert(null)}>
-             <div className="cert-modal-content" onClick={e => e.stopPropagation()}>
-               <button className="cert-modal-close" onClick={() => setModalCert(null)}>&times;</button>
-               <img src={modalCert.img} alt={modalCert.title} className="cert-modal-img" />
-               <div className="cert-modal-caption">
-                 <strong>{modalCert.title}</strong><br />
-                 <span>{modalCert.org}</span><br />
-                 <span>{modalCert.year}</span>
-               </div>
-             </div>
-           </div>
-         )}
-        </motion.section>
         {/* Projects */}
         <motion.section id="projects" className="modern-section"
           initial={{ opacity: 0, y: 40 }}
@@ -633,6 +550,90 @@ function App() {
                  <strong>{modalProject.title}</strong><br />
                  <span>{modalProject.desc}</span><br />
                  {modalProject.link && <div style={{marginTop:8}}><a href={modalProject.link} target="_blank" rel="noopener noreferrer">Visit Project</a></div>}
+               </div>
+             </div>
+           </div>
+         )}
+        </motion.section>
+        {/* Skills */}
+        <motion.section id="skills" className="modern-section"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+        >
+          <h2>Skills & Technologies</h2>
+          <div className="modern-skills">
+            {skillsData.map((cat) => (
+              <div key={cat.key} className="modern-skill-category">
+                <button className="modern-skill-heading" onClick={() => toggleSkillCategory(cat.key)}>
+                  {cat.label} <span>{openSkills[cat.key] ? '▲' : '▼'}</span>
+                </button>
+                {openSkills[cat.key] && (
+                  <motion.div
+                    className="modern-skill-list"
+                    variants={skillListVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {cat.skills.map(skill => (
+                      <motion.span
+                        key={skill.name}
+                        className="modern-skill-chip"
+                        variants={skillItemVariants}
+                        whileHover={{ scale: 1.12, rotate: -3 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <img src={skill.icon} alt={skill.name} className="modern-skill-icon" />
+                        {skill.name}
+                      </motion.span>
+                    ))}
+              </motion.div>
+                )}
+              </div>
+            ))}
+          </div>
+        </motion.section>
+        
+        {/* Certifications */}
+        <motion.section id="certifications" className="modern-section"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+        >
+          <h2>Certifications</h2>
+          <motion.div className="modern-certifications-grid"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7 }}
+          >
+            {certifications.map(cert => (
+              <div
+                key={cert.title}
+                className="modern-cert-item"
+                onClick={() => setModalCert(cert)}
+                style={{ cursor: 'pointer' }}
+              >
+                <img src={cert.img} alt={cert.title} className="modern-cert-img" />
+                <div className="modern-cert-info">
+                  <strong>{cert.title}</strong><br />
+                  <span>{cert.org}</span><br />
+                  <span>{cert.year}</span>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+         {modalCert && (
+           <div className="cert-modal-overlay" onClick={() => setModalCert(null)}>
+             <div className="cert-modal-content" onClick={e => e.stopPropagation()}>
+               <button className="cert-modal-close" onClick={() => setModalCert(null)}>&times;</button>
+               <img src={modalCert.img} alt={modalCert.title} className="cert-modal-img" />
+               <div className="cert-modal-caption">
+                 <strong>{modalCert.title}</strong><br />
+                 <span>{modalCert.org}</span><br />
+                 <span>{modalCert.year}</span>
                </div>
              </div>
            </div>
