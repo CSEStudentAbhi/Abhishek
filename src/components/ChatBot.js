@@ -128,7 +128,7 @@ const ChatBot = ({ autoOpen = false }) => {
 
   const getBotResponse = async (userMessage) => {
     try {
-      const response = await fetch('https://ravanmonster01.pythonanywhere.com/ask', {
+      const response = await fetch('https://flask-ai-assisstent.onrender.com/api/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
