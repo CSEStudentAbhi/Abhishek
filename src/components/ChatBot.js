@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 
 const ChatBot = ({ autoOpen = false }) => {
@@ -31,39 +32,48 @@ const ChatBot = ({ autoOpen = false }) => {
     scrollToBottom();
   }, [messages]);
 
+  // Auto-open effect
   useEffect(() => {
     if (autoOpen) {
       const timer = setTimeout(() => {
         setIsOpen(true);
-      }, 2000);
+      }, 2000); // Open after 2 seconds
       return () => clearTimeout(timer);
     }
   }, [autoOpen]);
 
+  // Function to parse response and format bullet points
   const parseResponse = (text) => {
     if (!text.includes('**')) {
       return text;
     }
 
+    // Split by ** and process each part
     const parts = text.split('**');
     const formattedParts = [];
 
     for (let i = 0; i < parts.length; i++) {
       const part = parts[i].trim();
       if (part) {
-        if (i % 2 === 1) {
+        // Check if this part should be a bullet point
+        if (i % 2 === 1) { // Odd indices are between ** markers
+          // Check if this bullet point ends with *
           if (part.endsWith('*')) {
-            const bulletContent = part.slice(0, -1).trim();
+            const bulletContent = part.slice(0, -1).trim(); // Remove the * at the end
+            
+            // Check if this content contains subpoints (text between * markers)
             if (bulletContent.includes('*')) {
               const subParts = bulletContent.split('*');
               const mainPoint = subParts[0].trim();
               const subpoints = [];
+              
               for (let j = 1; j < subParts.length; j++) {
                 const subPart = subParts[j].trim();
                 if (subPart) {
                   subpoints.push(subPart);
                 }
               }
+              
               formattedParts.push({
                 type: 'bullet-with-subpoints',
                 content: mainPoint,
@@ -78,16 +88,19 @@ const ChatBot = ({ autoOpen = false }) => {
               });
             }
           } else {
+            // Check if this content contains subpoints
             if (part.includes('*')) {
               const subParts = part.split('*');
               const mainPoint = subParts[0].trim();
               const subpoints = [];
+              
               for (let j = 1; j < subParts.length; j++) {
                 const subPart = subParts[j].trim();
                 if (subPart) {
                   subpoints.push(subPart);
                 }
               }
+              
               formattedParts.push({
                 type: 'bullet-with-subpoints',
                 content: mainPoint,
@@ -102,7 +115,7 @@ const ChatBot = ({ autoOpen = false }) => {
               });
             }
           }
-        } else {
+        } else { // Even indices are regular text
           formattedParts.push({
             type: 'text',
             content: part
@@ -116,7 +129,7 @@ const ChatBot = ({ autoOpen = false }) => {
 
   const getBotResponse = async (userMessage) => {
     try {
-      const response = await fetch('https://flask-ai-assistant.onrender.com/api/ask', {
+      const response = await fetch('https://ravanmonster01.pythonanywhere.com/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -127,16 +140,11 @@ const ChatBot = ({ autoOpen = false }) => {
       });
 
       if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.status}`);
+        throw new Error('Network response was not ok');
       }
 
       const data = await response.json();
-      console.log('Backend response:', data); // Debug log
-      if (data.success) {
-        return data.response;
-      } else {
-        throw new Error(data.error || 'Failed to get a valid response from the server');
-      }
+      return data.response || "I'm sorry, I couldn't process your request at the moment.";
     } catch (error) {
       console.error('Error fetching response:', error);
       return "I'm having trouble connecting to my brain right now. Please try again later!";
@@ -156,7 +164,7 @@ const ChatBot = ({ autoOpen = false }) => {
     setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
     setIsTyping(true);
-    setShowSuggestions(false);
+    setShowSuggestions(false); // Hide suggestions after first message
 
     try {
       const botResponseText = await getBotResponse(inputMessage);
@@ -169,6 +177,7 @@ const ChatBot = ({ autoOpen = false }) => {
       };
       
       setMessages(prev => [...prev, botResponse]);
+      
     } catch (error) {
       const errorResponse = {
         id: messages.length + 2,
@@ -183,6 +192,7 @@ const ChatBot = ({ autoOpen = false }) => {
   };
 
   const handleSuggestionClick = (suggestion) => {
+    // Directly send the suggestion without adding to input box
     const userMessage = {
       id: messages.length + 1,
       text: suggestion,
@@ -192,8 +202,9 @@ const ChatBot = ({ autoOpen = false }) => {
 
     setMessages(prev => [...prev, userMessage]);
     setIsTyping(true);
-    setShowSuggestions(false);
+    setShowSuggestions(false); // Hide suggestions after first message
 
+    // Get bot response for the suggestion
     getBotResponse(suggestion).then(botResponseText => {
       const botResponse = {
         id: messages.length + 2,
@@ -202,6 +213,7 @@ const ChatBot = ({ autoOpen = false }) => {
         timestamp: new Date()
       };
       setMessages(prev => [...prev, botResponse]);
+      
       setIsTyping(false);
     }).catch(error => {
       const errorResponse = {
@@ -221,6 +233,7 @@ const ChatBot = ({ autoOpen = false }) => {
     }
   };
 
+  // Component to render formatted message
   const FormattedMessage = ({ text }) => {
     const parsedContent = parseResponse(text);
     
@@ -261,6 +274,7 @@ const ChatBot = ({ autoOpen = false }) => {
 
   return (
     <>
+      {/* Chat Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         style={{
@@ -289,6 +303,7 @@ const ChatBot = ({ autoOpen = false }) => {
         💬
       </button>
 
+      {/* Chat Window */}
       {isOpen && (
         <div style={{
           position: 'fixed',
@@ -312,6 +327,7 @@ const ChatBot = ({ autoOpen = false }) => {
             left: '20px'
           })
         }}>
+          {/* Chat Header */}
           <div style={{
             padding: '16px',
             backgroundColor: 'var(--color-accent)',
@@ -339,6 +355,7 @@ const ChatBot = ({ autoOpen = false }) => {
             </div>
           </div>
 
+          {/* Messages Area */}
           <div style={{
             flex: 1,
             padding: '16px',
@@ -380,6 +397,7 @@ const ChatBot = ({ autoOpen = false }) => {
               </div>
             ))}
             
+            {/* Suggestion Questions */}
             {showSuggestions && messages.length === 1 && (
               <div style={{
                 alignSelf: 'flex-start',
@@ -450,6 +468,7 @@ const ChatBot = ({ autoOpen = false }) => {
             <div ref={messagesEndRef} />
           </div>
 
+          {/* Input Area */}
           <div style={{
             padding: '16px',
             borderTop: '1px solid var(--color-secondary)',
@@ -496,4 +515,4 @@ const ChatBot = ({ autoOpen = false }) => {
   );
 };
 
-export default ChatBot;
+export default ChatBot; 
