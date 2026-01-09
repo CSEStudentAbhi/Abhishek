@@ -78,6 +78,16 @@ import pathfinder3 from './ProjectImage/Patfinder (3).png';
 import pathfinder4 from './ProjectImage/Patfinder (4).png';
 import pathfinder5 from './ProjectImage/Patfinder (5).png';
 
+import ctutor1 from './ProjectImage/CTUTOR (1).jpeg';
+import ctutor2 from './ProjectImage/CTUTOR (2).jpeg';
+import ctutor3 from './ProjectImage/CTUTOR (3).jpeg';
+import ctutor4 from './ProjectImage/CTUTOR (4).jpeg';
+import ctutor5 from './ProjectImage/CTUTOR (5).jpeg';
+import ctutor6 from './ProjectImage/CTUTOR (6).jpeg';
+import ctutor7 from './ProjectImage/CTUTOR (7).jpeg';
+import ctutor8 from './ProjectImage/CTUTOR (8).jpeg';
+import ctutor9 from './ProjectImage/CTUTOR (9).jpeg';
+
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -225,7 +235,7 @@ function App() {
     {
       title: 'C-Tutor',
       desc: 'Augmented Reality (AR) is transforming education by creating immersive and interactive learning experiences that engage students and enhance comprehension.',
-      images: []
+      images: [ctutor1, ctutor2, ctutor3, ctutor4, ctutor5, ctutor6, ctutor7, ctutor8, ctutor9]
     },
     {
       title: 'Online Medicine Store',
@@ -722,7 +732,7 @@ function App() {
           </div>
           </motion.section>
       </div>
-      <ChatBot autoOpen={true} />
+      <ChatBot autoOpen={window.innerWidth > 768} />
     </ThemeProvider>
   );
 }
