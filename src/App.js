@@ -269,14 +269,6 @@ function App() {
     return () => clearTimeout(timeout);
   }, [typedName, isErasing, fullName]);
 
-  // Auto-advance images every 4 seconds
-  useEffect(() => {
-    const imageInterval = setInterval(() => {
-      // Auto-advance logic commented out with image carousel
-    }, 4000);
-
-    return () => clearInterval(imageInterval);
-  }, [images.length]);
 
   useEffect(() => {
     const blink = setInterval(() => setShowCursor(c => !c), 500);
