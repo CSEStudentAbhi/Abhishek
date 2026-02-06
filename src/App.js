@@ -176,6 +176,8 @@ const certifications = [
   { img: Nias, title: 'BootCamp on Machine Learning', org: 'Nias Academy', year: '2025' },
 ];
 
+const images = [Abhi, Abhishek1, Abhishek3, Abhishek4, Abhishek5];
+
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -189,8 +191,7 @@ function App() {
   const [showCursor, setShowCursor] = useState(true);
   const [isErasing, setIsErasing] = useState(false);
   const fullName = 'Abhishek Ambi';
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = [Abhi, Abhishek1, Abhishek3, Abhishek4, Abhishek5];
+  // images moved outside component
 
   // Project data with images
   const projectsData = [
@@ -203,7 +204,7 @@ function App() {
       title: 'Shri Vagdevi Construction',
       desc: 'Shri Vagdevi Constructions is a professional civil engineering and construction firm dedicated to delivering high-quality residential and commercial projects with precision and reliability.',
       link: 'https://www.shrivagdeviconstructions.com/',
-      images: [ vagdevi2, vagdevi3, vagdevi4, vagdevi5, vagdevi6, vagdevi7, vagdevi8]
+      images: [vagdevi2, vagdevi3, vagdevi4, vagdevi5, vagdevi6, vagdevi7, vagdevi8]
     },
     {
       title: 'Quick Eats',
@@ -271,7 +272,7 @@ function App() {
   // Auto-advance images every 4 seconds
   useEffect(() => {
     const imageInterval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      // Auto-advance logic commented out with image carousel
     }, 4000);
 
     return () => clearInterval(imageInterval);
@@ -353,7 +354,7 @@ function App() {
             <span className="modern-logo" onClick={() => scrollToSection('home')}>Abhishek</span>
             <button className="modern-menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>{isMenuOpen ? '×' : '☰'}</button>
             <ul className={`modern-nav-links ${isMenuOpen ? 'open' : ''}`}>
-              {['home','about','projects','skills','education','certifications','contact'].map((sec) => (
+              {['home', 'about', 'projects', 'skills', 'education', 'certifications', 'contact'].map((sec) => (
                 <li key={sec}>
                   <a
                     href={`#${sec}`}
@@ -368,7 +369,7 @@ function App() {
                 </li>
               ))}
             </ul>
-            <button className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle theme" style={{marginLeft: 16, fontSize: 22, background: 'none', border: 'none', color: 'var(--color-accent)', cursor: 'pointer'}}>
+            <button className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle theme" style={{ marginLeft: 16, fontSize: 22, background: 'none', border: 'none', color: 'var(--color-accent)', cursor: 'pointer' }}>
               {theme === 'dark' ? <FaSun /> : <FaMoon />}
             </button>
           </div>
@@ -488,23 +489,23 @@ function App() {
             })}
           </div> */}
           <div>
-            
-          <img 
-            src={Abhi} 
-            alt="Abhishek Ambi" 
-            className="modern-hero-img" 
-            style={{
-              transition: 'opacity 0.8s ease-in-out',
-              
-              position: 'relative',
-              zIndex: 10,
-              width: '200px',
-              height: '200px'
-            }}
-          />
+
+            <img
+              src={Abhi}
+              alt="Abhishek Ambi"
+              className="modern-hero-img"
+              style={{
+                transition: 'opacity 0.8s ease-in-out',
+
+                position: 'relative',
+                zIndex: 10,
+                width: '200px',
+                height: '200px'
+              }}
+            />
           </div>
           <h1 className="modern-hero-title" style={{
-            display:'inline-block',
+            display: 'inline-block',
             // position: 'absolute',
             zIndex: 15
           }}>
@@ -536,12 +537,12 @@ function App() {
         >
           <h2>About Me</h2>
           <p>Final year computer science student with practical experience in software development, data analysis, machine learning and computer vision through academic projects. Interested in using code and insights to solve real-world problems. Seeking to join a forward-thinking organization that supports innovation, mentorship, and lifelong learning while gaining worthwhile industry experience.</p>
-          </motion.section>
-          {/* Education */}
+        </motion.section>
+        {/* Education */}
         <motion.section id="education" className="modern-section"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2>Education</h2>
@@ -565,7 +566,7 @@ function App() {
               </div>
             </div>
           </div>
-          </motion.section>
+        </motion.section>
         {/* Projects */}
         <motion.section id="projects" className="modern-section"
           initial={{ opacity: 0, y: 40 }}
@@ -601,19 +602,19 @@ function App() {
               </div>
             ))}
           </motion.div>
-         {modalProject && (
-           <div className="cert-modal-overlay" onClick={() => setModalProject(null)}>
-             <div className="cert-modal-content" onClick={e => e.stopPropagation()}>
-               <button className="cert-modal-close" onClick={() => setModalProject(null)}>&times;</button>
-               <div className="cert-modal-caption">
-                 <strong>{modalProject.title}</strong><br />
-                 <span>{modalProject.desc}</span><br />
-                 {modalProject.link && <div style={{marginTop:8}}><a href={modalProject.link} target="_blank" rel="noopener noreferrer">Visit Project</a></div>}
-               </div>
-             </div>
-           </div>
-         )}
-         {imageSliderOpen && currentProjectImages.length > 0 && (
+          {modalProject && (
+            <div className="cert-modal-overlay" onClick={() => setModalProject(null)}>
+              <div className="cert-modal-content" onClick={e => e.stopPropagation()}>
+                <button className="cert-modal-close" onClick={() => setModalProject(null)}>&times;</button>
+                <div className="cert-modal-caption">
+                  <strong>{modalProject.title}</strong><br />
+                  <span>{modalProject.desc}</span><br />
+                  {modalProject.link && <div style={{ marginTop: 8 }}><a href={modalProject.link} target="_blank" rel="noopener noreferrer">Visit Project</a></div>}
+                </div>
+              </div>
+            </div>
+          )}
+          {imageSliderOpen && currentProjectImages.length > 0 && (
             <ImageSlider
               images={currentProjectImages}
               isOpen={imageSliderOpen}
@@ -626,7 +627,7 @@ function App() {
         <motion.section id="skills" className="modern-section"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
           <h2>Skills & Technologies</h2>
@@ -655,7 +656,7 @@ function App() {
                         {skill.name}
                       </motion.span>
                     ))}
-              </motion.div>
+                  </motion.div>
                 )}
               </div>
             ))}
@@ -691,19 +692,19 @@ function App() {
               </div>
             ))}
           </motion.div>
-         {modalCert && (
-           <div className="cert-modal-overlay" onClick={() => setModalCert(null)}>
-             <div className="cert-modal-content" onClick={e => e.stopPropagation()}>
-               <button className="cert-modal-close" onClick={() => setModalCert(null)}>&times;</button>
-               <img src={modalCert.img} alt={modalCert.title} className="cert-modal-img" />
-               <div className="cert-modal-caption">
-                 <strong>{modalCert.title}</strong><br />
-                 <span>{modalCert.org}</span><br />
-                 <span>{modalCert.year}</span>
-               </div>
-             </div>
-           </div>
-         )}
+          {modalCert && (
+            <div className="cert-modal-overlay" onClick={() => setModalCert(null)}>
+              <div className="cert-modal-content" onClick={e => e.stopPropagation()}>
+                <button className="cert-modal-close" onClick={() => setModalCert(null)}>&times;</button>
+                <img src={modalCert.img} alt={modalCert.title} className="cert-modal-img" />
+                <div className="cert-modal-caption">
+                  <strong>{modalCert.title}</strong><br />
+                  <span>{modalCert.org}</span><br />
+                  <span>{modalCert.year}</span>
+                </div>
+              </div>
+            </div>
+          )}
         </motion.section>
         {/* Contact */}
         <motion.section id="contact" className="modern-section"
@@ -715,19 +716,19 @@ function App() {
           <h2>Contact Me</h2>
           <div className="modern-contact-list">
             <div className="modern-contact-item">
-                <h3>Email</h3>
+              <h3>Email</h3>
               <a href="mailto:abhishekambi2003@gmail.com">abhishekambi2003@gmail.com</a>
             </div>
             <div className="modern-contact-item">
-                <h3>LinkedIn</h3>
+              <h3>LinkedIn</h3>
               <a href='https://www.linkedin.com/in/abhishekambi2003?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'>linkedin.com/in/abhishekambi2003</a>
             </div>
             <div className="modern-contact-item">
-                <h3>GitHub</h3>
+              <h3>GitHub</h3>
               <a href='https://www.github.com/CSEStudentAbhi'>github.com/CSEStudentAbhi</a>
             </div>
           </div>
-          </motion.section>
+        </motion.section>
       </div>
       <ChatBot autoOpen={window.innerWidth > 768} />
     </ThemeProvider>
