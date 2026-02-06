@@ -189,7 +189,6 @@ function App() {
   const [showCursor, setShowCursor] = useState(true);
   const [isErasing, setIsErasing] = useState(false);
   const fullName = 'Abhishek Ambi';
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = [Abhi, Abhishek1, Abhishek3, Abhishek4, Abhishek5];
 
   // Project data with images
@@ -271,7 +270,7 @@ function App() {
   // Auto-advance images every 4 seconds
   useEffect(() => {
     const imageInterval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      // Auto-advance logic commented out with image carousel
     }, 4000);
 
     return () => clearInterval(imageInterval);
