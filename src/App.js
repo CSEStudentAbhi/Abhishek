@@ -197,7 +197,7 @@ function App() {
   const projectsData = [
     {
       title: 'Meeting House',
-      desc: 'Developed an online meeting application using MERN Stack. Features include user authentication, event management, and resource sharing for seamless collaboration.'
+      desc: 'Developed an online meeting application using MERN Stack. Features include user authentication, event management, and resource sharing for seamless collaboration.',
       images: [meetingHouse1, meetingHouse2, meetingHouse3, meetingHouse4, meetingHouse5, meetingHouse6]
     },
     {
