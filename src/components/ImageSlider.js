@@ -10,17 +10,17 @@ const ImageSlider = ({ images, isOpen, onClose, projectData }) => {
     }
   }, [isOpen]);
 
-  const nextImage = () => {
-    setCurrentIndex((prevIndex) => 
+  const nextImage = React.useCallback(() => {
+    setCurrentIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
-  };
+  }, [images.length]);
 
-  const prevImage = () => {
-    setCurrentIndex((prevIndex) => 
+  const prevImage = React.useCallback(() => {
+    setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
-  };
+  }, [images.length]);
 
   const goToImage = (index) => {
     setCurrentIndex(index);
@@ -29,7 +29,7 @@ const ImageSlider = ({ images, isOpen, onClose, projectData }) => {
   useEffect(() => {
     const handleKeyPress = (e) => {
       if (!isOpen) return;
-      
+
       if (e.key === 'ArrowRight') {
         nextImage();
       } else if (e.key === 'ArrowLeft') {
@@ -41,12 +41,12 @@ const ImageSlider = ({ images, isOpen, onClose, projectData }) => {
 
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [isOpen, images.length]);
+  }, [isOpen, nextImage, prevImage, onClose]);
 
   if (!isOpen) return null;
 
   return (
-    <div 
+    <div
       className="image-slider-overlay"
       onClick={onClose}
       style={{
@@ -63,7 +63,7 @@ const ImageSlider = ({ images, isOpen, onClose, projectData }) => {
         padding: '20px'
       }}
     >
-      <div 
+      <div
         className="image-slider-content"
         onClick={(e) => e.stopPropagation()}
         style={{
@@ -230,9 +230,9 @@ const ImageSlider = ({ images, isOpen, onClose, projectData }) => {
               {projectData.desc}
             </p>
             {projectData.link && (
-              <a 
-                href={projectData.link} 
-                target="_blank" 
+              <a
+                href={projectData.link}
+                target="_blank"
                 rel="noopener noreferrer"
                 style={{
                   display: 'inline-block',
