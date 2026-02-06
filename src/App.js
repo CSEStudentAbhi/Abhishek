@@ -661,7 +661,6 @@ function App() {
             ))}
           </div>
         </motion.section>
-        
         {/* Certifications */}
         <motion.section id="certifications" className="modern-section"
           initial={{ opacity: 0, y: 40 }}
