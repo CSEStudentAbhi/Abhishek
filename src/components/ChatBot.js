@@ -312,7 +312,7 @@ const ChatBot = ({ autoOpen = false }) => {
           width: window.innerWidth <= 768 ? 'calc(100vw - 40px)' : '380px',
           height: window.innerWidth <= 768 ? 'calc(100vh - 200px)' : '550px',
           maxWidth: '380px',
-          maxHeight: '550px',
+          maxHeight: 'calc(100vh - 140px)',
           backgroundColor: 'var(--color-bg-paper)',
           borderRadius: '12px',
           boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
@@ -320,7 +320,6 @@ const ChatBot = ({ autoOpen = false }) => {
           display: 'flex',
           flexDirection: 'column',
           border: '1px solid var(--color-secondary)',
-          maxHeight: 'calc(100vh - 140px)',
           ...(window.innerWidth <= 768 && {
             bottom: '80px',
             right: '20px',
