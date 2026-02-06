@@ -9,7 +9,6 @@ import Abhishek1 from './image/AbhishekAmbi1.png'
 import Abhishek3 from './image/AbhishekAmbi3.png'
 import Abhishek4 from './image/AbhishekAmbi4.png';
 import Abhishek5 from './image/AbhishekAmbi5.png';
-
 import Python from './logo/python.png';
 import Java from './logo/java.png';
 import JavaScript from './logo/JavaScript.png';
