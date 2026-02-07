@@ -218,7 +218,7 @@ function App() {
     },
     {
       title: 'Object Detection',
-      desc: 'YOLOv5 (You Only Look Once version 5) is a powerful real-time object detection model known for its speed and accuracy.',
+      desc: 'YOLOv8 (You Only Look Once version 8) is a powerful real-time object detection model known for its speed and accuracy.',
       images: [objectDetection1, objectDetection2, objectDetection3, objectDetection4]
     },
     {
