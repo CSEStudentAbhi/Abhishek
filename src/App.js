@@ -5,9 +5,8 @@ import Collapse from '@mui/material/Collapse';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import SchoolIcon from '@mui/icons-material/School';
 import CodeIcon from '@mui/icons-material/Code';
-import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import EmailIcon from '@mui/icons-material/Email';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Abhi from './image/AbhishekAmbi.png';
 import Abhishek1 from './image/AbhishekAmbi1.png'
 import Abhishek3 from './image/AbhishekAmbi3.png'
@@ -362,18 +361,6 @@ function App() {
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
-  const skillListVariants = {
-    visible: {
-      transition: {
-        staggerChildren: 0.08
-      }
-    }
-  };
-  const skillItemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
   };
 
   useEffect(() => {
