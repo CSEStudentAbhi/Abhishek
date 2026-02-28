@@ -1,11 +1,15 @@
-// import React, { useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { motion } from 'framer-motion';
-// import AnimatedBackground from './components/AnimatedBackground';
+import Typography from '@mui/material/Typography';
+import Collapse from '@mui/material/Collapse';
+import EngineeringIcon from '@mui/icons-material/Engineering';
+import SchoolIcon from '@mui/icons-material/School';
+import CodeIcon from '@mui/icons-material/Code';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import EmailIcon from '@mui/icons-material/Email';
+import { motion, AnimatePresence } from 'framer-motion';
 import Abhi from './image/AbhishekAmbi.png';
 import Abhishek1 from './image/AbhishekAmbi1.png'
-// import Abhishek2 from './image/AbhishekAmbi2.png'
 import Abhishek3 from './image/AbhishekAmbi3.png'
 import Abhishek4 from './image/AbhishekAmbi4.png';
 import Abhishek5 from './image/AbhishekAmbi5.png';
@@ -48,16 +52,12 @@ import ChatBot from './components/ChatBot';
 import ImageSlider from './components/ImageSlider';
 import ComputerNetwork from './certificate/CN.jpg'
 import Nias from './certificate/Nias.jpeg'
-
-// Project Images
 import meetingHouse1 from './ProjectImage/MeetingHouse (1).png';
 import meetingHouse2 from './ProjectImage/MeetingHouse (2).png';
 import meetingHouse3 from './ProjectImage/MeetingHouse (3).png';
 import meetingHouse4 from './ProjectImage/MeetingHouse (4).png';
 import meetingHouse5 from './ProjectImage/MeetingHouse (5).png';
 import meetingHouse6 from './ProjectImage/MeetingHouse (6).png';
-
-// import vagdevi1 from './ProjectImage/vagdevi (1).png';
 import vagdevi2 from './ProjectImage/vagdevi (2).png';
 import vagdevi3 from './ProjectImage/vagdevi (3).png';
 import vagdevi4 from './ProjectImage/vagdevi (4).png';
@@ -65,18 +65,15 @@ import vagdevi5 from './ProjectImage/vagdevi (5).png';
 import vagdevi6 from './ProjectImage/vagdevi (6).png';
 import vagdevi7 from './ProjectImage/vagdevi (7).png';
 import vagdevi8 from './ProjectImage/vagdevi (8).png';
-
 import objectDetection1 from './ProjectImage/ObjectDetection (1).png';
 import objectDetection2 from './ProjectImage/ObjectDetection (2).png';
 import objectDetection3 from './ProjectImage/ObjectDetection (3).png';
 import objectDetection4 from './ProjectImage/ObjectDetection (4).png';
-
 import pathfinder1 from './ProjectImage/Patfinder (1).png';
 import pathfinder2 from './ProjectImage/Patfinder (2).png';
 import pathfinder3 from './ProjectImage/Patfinder (3).png';
 import pathfinder4 from './ProjectImage/Patfinder (4).png';
 import pathfinder5 from './ProjectImage/Patfinder (5).png';
-
 import ctutor1 from './ProjectImage/CTUTOR (1).jpeg';
 import ctutor2 from './ProjectImage/CTUTOR (2).jpeg';
 import ctutor3 from './ProjectImage/CTUTOR (3).jpeg';
@@ -86,18 +83,79 @@ import ctutor6 from './ProjectImage/CTUTOR (6).jpeg';
 import ctutor7 from './ProjectImage/CTUTOR (7).jpeg';
 import ctutor8 from './ProjectImage/CTUTOR (8).jpeg';
 import ctutor9 from './ProjectImage/CTUTOR (9).jpeg';
+// import React, { useState } from 'react';
+
+// --- Optimus Prime Custom Animations ---
+const mechanicalTransition = {
+  type: "spring",
+  stiffness: 120,
+  damping: 14,
+  mass: 1.5,
+};
+
+const slideInLeft = {
+  hidden: { x: -150, opacity: 0, scale: 0.9 },
+  visible: { x: 0, opacity: 1, scale: 1, transition: mechanicalTransition }
+};
+
+const slideInRight = {
+  hidden: { x: 150, opacity: 0, scale: 0.9 },
+  visible: { x: 0, opacity: 1, scale: 1, transition: mechanicalTransition }
+};
+
+const dropIn = {
+  hidden: { y: -100, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: "spring", bounce: 0.5, duration: 0.8 } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    }
+  }
+};
+// import AnimatedBackground from './components/AnimatedBackground';
+// import Abhishek2 from './image/AbhishekAmbi2.png'
+
+// Project Images
+
+// import vagdevi1 from './ProjectImage/vagdevi (1).png';
+
+
+
 
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    primary: { main: '#ff9800', contrastText: '#fff' },
-    secondary: { main: '#ff5722', contrastText: '#fff' },
-    background: { default: '#1a1a2e', paper: '#16213e' },
-    text: { primary: '#f0f0f0', secondary: '#a8a8a8' },
+    primary: { main: '#c1272d', contrastText: '#ffffff' }, // Autobot Red
+    secondary: { main: '#00257a', contrastText: '#ffffff' }, // Optimus Blue
+    background: { default: '#0a0a0f', paper: '#14141d' }, // Dark metallic space
+    text: { primary: '#e0e0e0', secondary: '#8ca1b9' }, // Silver chrome
+    divider: '#354359',
   },
   typography: {
-    fontFamily: 'Montserrat, Roboto, Arial, sans-serif',
+    fontFamily: '"Rajdhani", "Montserrat", "Roboto", "Helvetica", "Arial", sans-serif',
+    h2: {
+      textTransform: 'uppercase',
+      fontWeight: 'bold',
+      letterSpacing: '0.1em',
+    }
   },
+  components: {
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: '4px', // Harder angles
+          fontWeight: 600,
+          border: '1px solid #354359',
+        }
+      }
+    }
+  }
 });
 
 const skillsData = [
@@ -181,7 +239,8 @@ const images = [Abhi, Abhishek1, Abhishek3, Abhishek4, Abhishek5];
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [openSkills, setOpenSkills] = useState({});
+  const initialSkillsState = skillsData.reduce((acc, cat) => ({ ...acc, [cat.key]: true }), {});
+  const [openSkills, setOpenSkills] = useState(initialSkillsState);
   const [theme, setTheme] = useState('dark');
   const [modalCert, setModalCert] = useState(null);
   const [modalProject, setModalProject] = useState(null);
@@ -192,6 +251,7 @@ function App() {
   const [isErasing, setIsErasing] = useState(false);
   const fullName = 'Abhishek Ambi';
   // images moved outside component
+
 
   // Project data with images
   const projectsData = [
@@ -339,7 +399,8 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <div className="modern-app">
+      <div className="modern-app" style={{ position: 'relative' }}>
+
         {/* Navigation */}
         <nav className={`modern-nav ${isMenuOpen ? 'open' : ''}`}>
           <div className="modern-nav-content">
@@ -496,11 +557,14 @@ function App() {
               }}
             />
           </div>
-          <h1 className="modern-hero-title" style={{
-            display: 'inline-block',
-            // position: 'absolute',
-            zIndex: 15
-          }}>
+          <Typography
+            variant="h3"
+            component={motion.h1}
+            initial={{ scale: 0.5, opacity: 0, rotateX: -90 }}
+            animate={{ scale: 1, opacity: 1, rotateX: 0 }}
+            transition={{ type: "spring", stiffness: 200, damping: 10 }}
+            className="modern-hero-title"
+            sx={{ fontWeight: 'bold' }}>
             {typedName}
             <span style={{
               display: 'inline-block',
@@ -514,7 +578,7 @@ function App() {
             }}>
               |
             </span>
-          </h1>
+          </Typography>
           <p className="modern-hero-subtitle" style={{
             position: 'relative',
             zIndex: 15
@@ -531,15 +595,20 @@ function App() {
           <p>Final year computer science student with practical experience in software development, data analysis, machine learning and computer vision through academic projects. Interested in using code and insights to solve real-world problems. Seeking to join a forward-thinking organization that supports innovation, mentorship, and lifelong learning while gaining worthwhile industry experience.</p>
         </motion.section>
         {/* Education */}
-        <motion.section id="education" className="modern-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
+        <motion.section
+          id="education"
+          className="modern-section"
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
+          variants={slideInRight}
         >
-          <h2>Education</h2>
-          <div className="modern-timeline">
-            <div className="modern-timeline-item">
+          <Typography variant="h2" component="h2" align="center" gutterBottom>
+            <SchoolIcon sx={{ verticalAlign: 'middle', mr: 1, fontSize: 36 }} />
+            ORIGINS & TRAINING
+          </Typography>
+          <motion.div className="modern-timeline" variants={staggerContainer}>
+            <motion.div className="modern-timeline-item" variants={dropIn}>
               <div className="modern-timeline-dot" />
               <div>
                 <h3>RV INSTITUTE OF TECHNOLOGY AND MANAGEMENT BENGALURU</h3>
@@ -547,36 +616,40 @@ function App() {
                 <p>CGPA: 8.26</p>
                 <p>2023 - 2026</p>
               </div>
-            </div>
-            <div className="modern-timeline-item">
-              <div className="modern-timeline-dot" />
-              <div>
+            </motion.div>
+
+            <motion.div className="modern-timeline-item" variants={dropIn}>
+              <div className="modern-timeline-dot"></div>
+              <div className="modern-timeline-content">
                 <h3>K.L.E.SOCIETY'S POLYTECHNIC MAHALINGAPUR</h3>
                 <p>Diploma in Computer Science & Engg</p>
                 <p>CGPA: 9.83</p>
                 <p>2020 - 2023</p>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </motion.section>
-        {/* Projects */}
-        <motion.section id="projects" className="modern-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
+
+        {/* ======================= PROJECTS SECTION ======================= */}
+        <motion.section
+          id="projects"
+          className="modern-section"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={slideInRight}
         >
-          <h2>Projects</h2>
-          <motion.div className="modern-projects-grid"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7 }}
-          >
+          <Typography variant="h2" component="h2" align="center" gutterBottom>
+            <CodeIcon sx={{ verticalAlign: 'middle', mr: 1, fontSize: 36 }} />
+            MISSIONS ACCOMPLISHED
+          </Typography>
+          <motion.div className="modern-projects-grid" variants={staggerContainer}>
             {projectsData.map(project => (
-              <div
+              <motion.div
                 key={project.title}
                 className="modern-project-item"
+                variants={dropIn}
+                whileHover={{ scale: 1.02 }}
                 onClick={() => {
                   if (project.images && project.images.length > 0) {
                     setCurrentProjectImages(project.images);
@@ -591,7 +664,7 @@ function App() {
                 <h3>{project.title}</h3>
                 <p>{project.desc}</p>
                 {project.link && <a href={project.link} onClick={e => e.stopPropagation()}>{project.title}</a>}
-              </div>
+              </motion.div>
             ))}
           </motion.div>
           {modalProject && (
@@ -616,43 +689,47 @@ function App() {
           )}
         </motion.section>
         {/* Skills */}
-        <motion.section id="skills" className="modern-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
+        <motion.section
+          id="skills"
+          className="modern-section"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={slideInLeft}
         >
-          <h2>Skills & Technologies</h2>
-          <div className="modern-skills">
+          <Typography variant="h2" component="h2" align="center" gutterBottom>
+            <EngineeringIcon sx={{ verticalAlign: 'middle', mr: 1, fontSize: 36 }} />
+            TECHNICAL ARSENAL
+          </Typography>
+          <motion.div className="modern-skills" variants={staggerContainer}>
             {skillsData.map((cat) => (
               <div key={cat.key} className="modern-skill-category">
                 <button className="modern-skill-heading" onClick={() => toggleSkillCategory(cat.key)}>
                   {cat.label} <span>{openSkills[cat.key] ? '▲' : '▼'}</span>
                 </button>
-                {openSkills[cat.key] && (
+                <Collapse in={openSkills[cat.key]}>
                   <motion.div
                     className="modern-skill-list"
-                    variants={skillListVariants}
                     initial="hidden"
-                    animate="visible"
+                    animate={openSkills[cat.key] ? "visible" : "hidden"}
+                    variants={staggerContainer}
                   >
-                    {cat.skills.map(skill => (
-                      <motion.span
-                        key={skill.name}
+                    {cat.skills.map((skill, idx) => (
+                      <motion.div
+                        key={idx}
                         className="modern-skill-chip"
-                        variants={skillItemVariants}
-                        whileHover={{ scale: 1.12, rotate: -3 }}
-                        whileTap={{ scale: 0.95 }}
+                        variants={dropIn}
+                        whileHover={{ scale: 1.05 }}
                       >
                         <img src={skill.icon} alt={skill.name} className="modern-skill-icon" />
-                        {skill.name}
-                      </motion.span>
+                        <span>{skill.name}</span>
+                      </motion.div>
                     ))}
                   </motion.div>
-                )}
+                </Collapse>
               </div>
             ))}
-          </div>
+          </motion.div>
         </motion.section>
         {/* Certifications */}
         <motion.section id="certifications" className="modern-section"
@@ -668,6 +745,15 @@ function App() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7 }}
           >
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5, type: "spring" }}
+            >
+              <Typography variant="body1" sx={{ mt: 2, maxWidth: '600px', mx: 'auto', color: 'text.secondary', fontWeight: 500, fontSize: '1.1rem' }}>
+                <span style={{ color: "var(--color-primary)", fontWeight: 'bold' }}>AUTOBOTS, TRANSFORM AND ROLL OUT!</span> I am an engineering student specializing in Computer Science and Engineering. Welcome to my mechanical domain.
+              </Typography>
+            </motion.div>
             {certifications.map(cert => (
               <div
                 key={cert.title}
@@ -699,13 +785,18 @@ function App() {
           )}
         </motion.section>
         {/* Contact */}
-        <motion.section id="contact" className="modern-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
+        <motion.section
+          id="contact"
+          className="modern-section"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={dropIn}
         >
-          <h2>Contact Me</h2>
+          <Typography variant="h2" component="h2" align="center" gutterBottom>
+            <EmailIcon sx={{ verticalAlign: 'middle', mr: 1, fontSize: 36 }} />
+            COMMUNICATIONS ARRAY
+          </Typography>
           <div className="modern-contact-list">
             <div className="modern-contact-item">
               <h3>Email</h3>
