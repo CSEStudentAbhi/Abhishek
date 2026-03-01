@@ -6,29 +6,44 @@
 
 :root {
   /* Autobot Dark Mode Settings */
-  --color-bg: #050608; /* Very dark metallic space */
-  --color-bg-paper: #11141d; /* Slightly lighter chassis */
-  --color-primary: #c1272d; /* Autobot Red */
-  --color-secondary: #00257a; /* Optimus Deep Blue */
-  --color-text: #e0e0e0; /* Silver Chrome Text */
-  --color-text-secondary: #8ca1b9; /* Brushed Steel */
-  --color-accent: #0f6cff; /* Energon Blue Glow */
+  --color-bg: #050608;
+  /* Very dark metallic space */
+  --color-bg-paper: #11141d;
+  /* Slightly lighter chassis */
+  --color-primary: #c1272d;
+  /* Autobot Red */
+  --color-secondary: #00257a;
+  /* Optimus Deep Blue */
+  --color-text: #e0e0e0;
+  /* Silver Chrome Text */
+  --color-text-secondary: #8ca1b9;
+  /* Brushed Steel */
+  --color-accent: #0f6cff;
+  /* Energon Blue Glow */
   --color-border: #354359;
 }
 
-body.light-theme, .light-theme {
+body.light-theme,
+.light-theme {
   /* Autobot Light Mode Settings */
-  --color-bg: #e6e9ee; /* Bright silver plating */
+  --color-bg: #e6e9ee;
+  /* Bright silver plating */
   --color-bg-paper: #ffffff;
-  --color-primary: #a31d22; /* Rich Red */
-  --color-secondary: #001852; /* Darker Navy Blue */
-  --color-text: #050608; 
+  --color-primary: #a31d22;
+  /* Rich Red */
+  --color-secondary: #001852;
+  /* Darker Navy Blue */
+  --color-text: #050608;
   --color-text-secondary: #4a5d7c;
-  --color-accent: #c1272d; /* Red Accent */
+  --color-accent: #c1272d;
+  /* Red Accent */
   --color-border: #bcc5d3;
 }
 
-body, html, #root, .modern-app {
+body,
+html,
+#root,
+.modern-app {
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -40,22 +55,51 @@ body, html, #root, .modern-app {
 
 /* --- Animations --- */
 @keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
+
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(0,188,212,0.15); }
-  70% { box-shadow: 0 0 0 10px rgba(0,188,212,0.05); }
-  100% { box-shadow: 0 0 0 0 rgba(0,188,212,0.15); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 188, 212, 0.15);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 188, 212, 0.05);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 188, 212, 0.15);
+  }
 }
+
 @keyframes shimmer {
-  0% { background-position: -200px 0; }
-  100% { background-position: 200px 0; }
+  0% {
+    background-position: -200px 0;
+  }
+
+  100% {
+    background-position: 200px 0;
+  }
 }
+
 @keyframes progress {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* --- Interactive Animations --- */
@@ -63,11 +107,13 @@ body, html, #root, .modern-app {
   animation: float 3.5s ease-in-out infinite;
 }
 
-.modern-skill-chip:hover, .modern-skill-chip:active {
+.modern-skill-chip:hover,
+.modern-skill-chip:active {
   animation: pulse 1.2s infinite;
 }
 
-.theme-toggle-btn:hover, .theme-toggle-btn:active {
+.theme-toggle-btn:hover,
+.theme-toggle-btn:active {
   animation: pulse 1.2s infinite;
 }
 
@@ -75,11 +121,15 @@ body, html, #root, .modern-app {
   position: relative;
   overflow: hidden;
 }
+
 .modern-logo:hover::after {
   content: '';
   position: absolute;
-  left: 0; top: 0; right: 0; bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(0,188,212,0.15) 50%, transparent 100%);
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(0, 188, 212, 0.15) 50%, transparent 100%);
   animation: shimmer 1.5s linear infinite;
   pointer-events: none;
 }
@@ -91,8 +141,9 @@ body, html, #root, .modern-app {
   width: 100%;
   background: var(--color-bg-paper);
   z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
+
 .modern-nav-content {
   display: flex;
   align-items: center;
@@ -101,13 +152,15 @@ body, html, #root, .modern-app {
   margin: 0 auto;
   padding: 0.5rem 1.5rem;
 }
+
 .modern-logo {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-accent);
   cursor: pointer;
   letter-spacing: 0.05em;
-  }
+}
+
 .modern-menu-btn {
   display: none;
   background: none;
@@ -115,14 +168,16 @@ body, html, #root, .modern-app {
   font-size: 2rem;
   color: var(--color-accent);
   cursor: pointer;
-  }
+}
+
 .modern-nav-links {
   display: flex;
   gap: 2rem;
   list-style: none;
   margin: 0;
   padding: 0;
-  }
+}
+
 .modern-nav-links li a {
   color: var(--color-text);
   text-decoration: none;
@@ -132,10 +187,12 @@ body, html, #root, .modern-app {
   position: relative;
   overflow: hidden;
 }
+
 .modern-nav-links li a::after {
   content: '';
   position: absolute;
-  left: 0; bottom: -2px;
+  left: 0;
+  bottom: -2px;
   width: 100%;
   height: 2px;
   background: var(--color-accent);
@@ -143,10 +200,12 @@ body, html, #root, .modern-app {
   transform-origin: left;
   transition: transform 0.3s;
 }
+
 .modern-nav-links li a:hover::after,
 .modern-nav-links li a.active::after {
   transform: scaleX(1);
 }
+
 .modern-nav-links li a.active,
 .modern-nav-links li a:hover {
   color: var(--color-accent);
@@ -161,16 +220,17 @@ body, html, #root, .modern-app {
   padding: 3rem 1rem 2rem 1rem;
   background: linear-gradient(180deg, var(--color-bg) 60%, var(--color-bg-paper) 100%);
 }
+
 .modern-hero-img {
   width: 180px;
   height: 180px;
-  border-radius: 12px; /* Mechanical hexagonal-like corners if we used clip-path, but border-radius keeps it simple boxy */
+  border-radius: 50%;
   object-fit: cover;
-  border: 4px solid var(--color-primary); /* Red outline */
+  border: 4px solid var(--color-primary);
   margin-bottom: 1.2rem;
-  box-shadow: 0 4px 24px rgba(15, 108, 255, 0.2); /* ENERGON GLOW */
-  clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); /* Octagon chassis shape */
+  box-shadow: 0 0 24px var(--color-primary);
 }
+
 .modern-hero-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -178,6 +238,7 @@ body, html, #root, .modern-app {
   color: var(--color-accent);
   letter-spacing: 0.04em;
 }
+
 .modern-hero-subtitle {
   font-size: 1.2rem;
   color: var(--color-text-secondary);
@@ -191,6 +252,7 @@ body, html, #root, .modern-app {
   margin: 2.5rem auto 0 auto;
   padding: 0 1.5rem 2.5rem 1.5rem;
 }
+
 .modern-section h2 {
   font-size: 2rem;
   color: var(--color-accent);
@@ -205,9 +267,11 @@ body, html, #root, .modern-app {
   flex-direction: column;
   gap: 1.5rem;
 }
+
 .modern-skill-category {
   margin-bottom: 0.5rem;
 }
+
 .modern-skill-heading {
   background: none;
   border: none;
@@ -226,39 +290,49 @@ body, html, #root, .modern-app {
   margin-bottom: 0.2rem;
   transition: background 0.2s;
 }
+
 .modern-skill-heading:hover {
-  background: rgba(0,188,212,0.08);
+  background: rgba(0, 188, 212, 0.08);
 }
+
 .modern-skill-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem 1.2rem;
   margin: 0.5rem 0 0.5rem 0.5rem;
 }
+
 .modern-skill-chip {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   background: var(--color-bg-paper);
   color: var(--color-text);
-  border-radius: 4px; /* Boxy */
+  border-radius: 4px;
+  /* Boxy */
   border: 1px solid var(--color-border);
   padding: 0.4rem 1rem 0.4rem 0.7rem;
   font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05); /* Metallic edge */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  /* Metallic edge */
   transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   cursor: pointer;
 }
-.modern-skill-chip:hover, .modern-skill-chip:active {
-  background: var(--color-secondary); /* Blue */
-  border-color: var(--color-accent); /* Bright blue glow */
+
+.modern-skill-chip:hover,
+.modern-skill-chip:active {
+  background: var(--color-secondary);
+  /* Blue */
+  border-color: var(--color-accent);
+  /* Bright blue glow */
   color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(15, 108, 255, 0.4);
 }
+
 .modern-skill-icon {
   width: 28px;
   height: 28px;
@@ -274,19 +348,21 @@ body, html, #root, .modern-app {
   border-left: 3px solid var(--color-accent);
   padding-left: 1.5rem;
 }
+
 .modern-timeline-item {
   display: flex;
   align-items: flex-start;
   gap: 1.2rem;
   position: relative;
 }
+
 .modern-timeline-dot {
   width: 18px;
   height: 18px;
   background: var(--color-accent);
   border-radius: 50%;
   margin-top: 0.3rem;
-  box-shadow: 0 2px 8px rgba(0,188,212,0.15);
+  box-shadow: 0 2px 8px rgba(0, 188, 212, 0.15);
 }
 
 /* Certifications */
@@ -295,6 +371,7 @@ body, html, #root, .modern-app {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.5rem;
 }
+
 .modern-cert-item {
   display: flex;
   align-items: flex-start;
@@ -306,20 +383,26 @@ body, html, #root, .modern-app {
   transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
-.modern-cert-item:hover, .modern-cert-item:active {
-  background: var(--color-primary); /* Red */
+
+.modern-cert-item:hover,
+.modern-cert-item:active {
+  background: var(--color-primary);
+  /* Red */
   border-color: var(--color-primary);
   color: #fff;
   transform: translateX(4px);
-  box-shadow: 4px 4px 0px rgba(15, 108, 255, 0.5); /* Offset mechanical shadow */
+  box-shadow: 4px 4px 0px rgba(15, 108, 255, 0.5);
+  /* Offset mechanical shadow */
 }
+
 .modern-cert-img {
   width: 60px;
   height: 60px;
   object-fit: cover;
   border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,188,212,0.10);
+  box-shadow: 0 1px 4px rgba(0, 188, 212, 0.10);
 }
+
 .modern-cert-info {
   font-size: 1rem;
   font-weight: 500;
@@ -331,6 +414,7 @@ body, html, #root, .modern-app {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
 }
+
 .modern-project-item {
   background: var(--color-bg-paper);
   border-radius: 4px;
@@ -338,14 +422,15 @@ body, html, #root, .modern-app {
   padding: 1.2rem 1rem;
   transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0,188,212,0.07);
+  box-shadow: 0 1px 4px rgba(0, 188, 212, 0.07);
   position: relative;
   overflow: hidden;
 }
+
 .modern-project-item .project-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,188,212,0.08);
+  background: rgba(0, 188, 212, 0.08);
   opacity: 0;
   transition: opacity 0.3s;
   display: flex;
@@ -355,24 +440,33 @@ body, html, #root, .modern-app {
   font-size: 1.1rem;
   font-weight: 600;
 }
+
 .modern-project-item:hover .project-overlay {
   opacity: 1;
 }
-.modern-project-item:hover, .modern-project-item:active {
-  background: var(--color-secondary); /* Deep Blue */
+
+.modern-project-item:hover,
+.modern-project-item:active {
+  background: var(--color-secondary);
+  /* Deep Blue */
   border-color: var(--color-accent);
   color: #fff;
   transform: translateY(-4px);
-  box-shadow: 0 8px 0px rgba(193, 39, 45, 1); /* Bottom red block shadow */
+  box-shadow: 0 8px 0px rgba(193, 39, 45, 1);
+  /* Bottom red block shadow */
 }
+
 .modern-project-item h3 {
   margin-top: 0;
   margin-bottom: 0.5rem;
   color: var(--color-accent);
 }
-.modern-project-item:hover h3, .modern-project-item:active h3 {
+
+.modern-project-item:hover h3,
+.modern-project-item:active h3 {
   color: var(--color-bg);
 }
+
 .modern-project-item a {
   color: var(--color-accent);
   text-decoration: underline;
@@ -386,6 +480,7 @@ body, html, #root, .modern-app {
   gap: 2rem;
   margin-top: 1.5rem;
 }
+
 .modern-contact-item {
   min-width: 180px;
   flex: 1 1 220px;
@@ -393,32 +488,40 @@ body, html, #root, .modern-app {
   border-radius: 8px;
   padding: 1rem 1.2rem;
   color: var(--color-text);
-  box-shadow: 0 1px 4px rgba(0,188,212,0.07);
+  box-shadow: 0 1px 4px rgba(0, 188, 212, 0.07);
   transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
+
 .modern-contact-item h3 {
   margin-top: 0;
   margin-bottom: 0.5rem;
   color: var(--color-accent);
 }
+
 .modern-contact-item a {
   color: var(--color-accent);
   text-decoration: underline;
   word-break: break-all;
 }
-.modern-contact-item:hover, .modern-contact-item:active {
+
+.modern-contact-item:hover,
+.modern-contact-item:active {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   transform: scale(1.05) rotate(1deg);
   box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3), 0 4px 16px rgba(118, 75, 162, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.1);
 }
-.modern-contact-item:hover h3, .modern-contact-item:active h3 {
+
+.modern-contact-item:hover h3,
+.modern-contact-item:active h3 {
   color: white;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
-.modern-contact-item:hover a, .modern-contact-item:active a {
+
+.modern-contact-item:hover a,
+.modern-contact-item:active a {
   color: #ffeb3b;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
@@ -428,64 +531,78 @@ body, html, #root, .modern-app {
   .modern-section {
     max-width: 100%;
     padding: 0 0.5rem 2rem 0.5rem;
-}
+  }
+
   .modern-nav-content {
     max-width: 100%;
     padding: 0.5rem 0.5rem;
+  }
 }
-}
+
 @media (max-width: 700px) {
   .modern-hero-title {
     font-size: 2rem;
-}
+  }
+
   .modern-section h2 {
     font-size: 1.3rem;
   }
+
   .modern-skill-chip {
     font-size: 0.95rem;
     padding: 0.3rem 0.7rem 0.3rem 0.5rem;
   }
 }
+
 @media (max-width: 600px) {
   .modern-nav-links {
     display: none;
-  position: absolute;
+    position: absolute;
     top: 60px;
-  left: 0;
+    left: 0;
     width: 100vw;
     background: #112240;
     flex-direction: column;
     gap: 1.2rem;
     padding: 1.5rem 0;
     z-index: 200;
-}
+  }
+
   .modern-nav.open .modern-nav-links {
     display: flex;
-}
+  }
+
   .modern-menu-btn {
     display: block;
   }
+
   .modern-hero-img {
     width: 90px;
     height: 90px;
   }
+
   .modern-section {
     padding: 0 0.2rem 1.5rem 0.2rem;
   }
+
   .modern-skills {
     gap: 1rem;
   }
+
   .modern-skill-list {
     gap: 0.5rem 0.7rem;
   }
+
   .modern-certifications-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+
   .modern-projects-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+
   .modern-contact-list {
     flex-direction: column;
     gap: 1rem;
@@ -502,11 +619,13 @@ body, html, #root, .modern-app {
   padding: 0.4rem 1rem 0.4rem 0.7rem;
   font-size: 1rem;
   font-weight: 500;
-  box-shadow: 0 1px 4px rgba(0,188,212,0.07);
+  box-shadow: 0 1px 4px rgba(0, 188, 212, 0.07);
   transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
-.modern-skill-chip:hover, .modern-skill-chip:active {
+
+.modern-skill-chip:hover,
+.modern-skill-chip:active {
   background: var(--color-secondary);
   color: #fff;
   transform: translateY(-2px);
@@ -517,8 +636,10 @@ body, html, #root, .modern-app {
   cursor: pointer;
   transition: background 0.2s, color 0.2s, transform 0.2s;
 }
-.modern-skill-heading:hover, .modern-skill-heading:active {
-  background: rgba(0,188,212,0.13);
+
+.modern-skill-heading:hover,
+.modern-skill-heading:active {
+  background: rgba(0, 188, 212, 0.13);
   color: var(--color-accent);
   transform: scale(1.03);
 }
@@ -527,51 +648,63 @@ body, html, #root, .modern-app {
   transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
-.modern-cert-item:hover, .modern-cert-item:active {
+
+.modern-cert-item:hover,
+.modern-cert-item:active {
   background: var(--color-accent);
   color: var(--color-bg);
   transform: scale(1.04);
-  box-shadow: 0 6px 24px rgba(0,188,212,0.18);
+  box-shadow: 0 6px 24px rgba(0, 188, 212, 0.18);
 }
 
 .modern-project-item {
   transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
-.modern-project-item:hover, .modern-project-item:active {
+
+.modern-project-item:hover,
+.modern-project-item:active {
   background: var(--color-accent);
   color: var(--color-bg);
   transform: scale(1.04);
-  box-shadow: 0 6px 24px rgba(0,188,212,0.18);
+  box-shadow: 0 6px 24px rgba(0, 188, 212, 0.18);
 }
 
 .modern-contact-item {
   transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
-.modern-contact-item:hover, .modern-contact-item:active {
+
+.modern-contact-item:hover,
+.modern-contact-item:active {
   background: var(--color-accent);
   color: var(--color-bg);
   transform: scale(1.04);
-  box-shadow: 0 6px 24px rgba(0,188,212,0.18);
+  box-shadow: 0 6px 24px rgba(0, 188, 212, 0.18);
 }
 
 .theme-toggle-btn {
   transition: color 0.2s, transform 0.2s;
   cursor: pointer;
 }
-.theme-toggle-btn:hover, .theme-toggle-btn:active {
+
+.theme-toggle-btn:hover,
+.theme-toggle-btn:active {
   color: #ffb300;
   transform: scale(1.15) rotate(-15deg);
 }
 
 .binary-bg {
   position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
 }
+
 .binary-digit {
   position: absolute;
   top: -40px;
@@ -583,20 +716,24 @@ body, html, #root, .modern-app {
   animation: binary-fall linear infinite;
   text-shadow: 0 0 8px #00ff55, 0 0 2px #00ff55;
 }
+
 @keyframes binary-fall {
-  0% { 
-    top: -50px; 
-    opacity: 0.3; 
+  0% {
+    top: -50px;
+    opacity: 0.3;
   }
-  10% { 
-    opacity: 0.3; 
+
+  10% {
+    opacity: 0.3;
   }
-  90% { 
-    opacity: 0.3; 
+
+  90% {
+    opacity: 0.3;
   }
-  100% { 
-    top: 100vh; 
-    opacity: 0; 
+
+  100% {
+    top: 100vh;
+    opacity: 0;
   }
 }
 
@@ -608,7 +745,10 @@ body, html, #root, .modern-app {
 
 .cert-modal-overlay {
   position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(10, 25, 47, 0.85);
   z-index: 9999;
   display: flex;
@@ -616,11 +756,12 @@ body, html, #root, .modern-app {
   justify-content: center;
   animation: fadeIn 0.3s;
 }
+
 .cert-modal-content {
   background: var(--color-bg-paper);
   border-radius: 12px;
   padding: 1.5rem 1.5rem 1rem 1.5rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   position: relative;
   max-width: 95vw;
   max-height: 90vh;
@@ -628,19 +769,22 @@ body, html, #root, .modern-app {
   flex-direction: column;
   align-items: center;
 }
+
 .cert-modal-img {
   max-width: 80vw;
   max-height: 60vh;
   border-radius: 8px;
-  box-shadow: 0 2px 16px rgba(0,188,212,0.18);
+  box-shadow: 0 2px 16px rgba(0, 188, 212, 0.18);
   margin-bottom: 1rem;
 }
+
 .cert-modal-caption {
   color: var(--color-text);
   text-align: center;
   font-size: 1.1rem;
   margin-top: 0.5rem;
 }
+
 .cert-modal-close {
   position: absolute;
   top: 0.5rem;
@@ -653,19 +797,28 @@ body, html, #root, .modern-app {
   z-index: 2;
   transition: color 0.2s;
 }
+
 .cert-modal-close:hover {
   color: #ff4081;
 }
+
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
+
 @media (max-width: 600px) {
   .cert-modal-content {
     padding: 0.5rem 0.2rem 0.5rem 0.2rem;
     max-width: 98vw;
     max-height: 90vh;
   }
+
   .cert-modal-img {
     max-width: 98vw;
     max-height: 40vh;
