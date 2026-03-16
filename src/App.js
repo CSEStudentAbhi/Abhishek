@@ -569,7 +569,7 @@ function App() {
           <p className="modern-hero-subtitle" style={{
             position: 'relative',
             zIndex: 15
-          }}>Computer Science & Engineering Student</p>
+          }}>Computer Science & Engineering Student & Working @ Brillio</p>
         </header>
         {/* About */}
         <motion.section id="about" className="modern-section"
