@@ -128,7 +128,7 @@ const staggerContainer = {
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    primary: { main: '#c1272d', contrastText: '#ffffff' }, // Autobot Red
+    primary: { main: '#c1272d', contrastText: '#ffffcf' }, // Autobot Red
     secondary: { main: '#00257a', contrastText: '#ffffff' }, // Optimus Blue
     background: { default: '#0a0a0f', paper: '#14141d' }, // Dark metallic space
     text: { primary: '#e0e0e0', secondary: '#8ca1b9' }, // Silver chrome
