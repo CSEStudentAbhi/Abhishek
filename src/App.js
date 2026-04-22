@@ -125,8 +125,6 @@ const staggerContainer = {
 // import vagdevi1 from './ProjectImage/vagdevi (1).png';
 
 
-
-
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
